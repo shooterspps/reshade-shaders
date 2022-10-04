@@ -23,136 +23,167 @@
 #include "ReShadeUI.fxh"
 
 uniform bool DOF_AUTOFOCUS <
-	ui_tooltip = "Enables automated focus recognition based on samples around autofocus center.";
+	ui_label = "自动对焦";
+	ui_tooltip = "使自动对焦识别基于样品周围的自动对焦中心。";
 > = true;
 uniform bool DOF_MOUSEDRIVEN_AF <
-	ui_tooltip = "Enables mouse driven auto-focus. If 1 the AF focus point is read from the mouse coordinates, otherwise the DOF_FOCUSPOINT is used.";
+	ui_label = "鼠标驱动自动对焦";
+	ui_tooltip = "启用鼠标驱动的自动对焦。如果从鼠标坐标中读取自动对焦焦点，则使用聚焦点。";
 > = false;
 uniform float2 DOF_FOCUSPOINT < __UNIFORM_SLIDER_FLOAT2
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "X and Y coordinates of autofocus center. Axes start from upper left screen corner.";
+	ui_label = "聚焦点";
+	ui_tooltip = "自动对焦中心的X和Y坐标。坐标轴从屏幕左上角开始。";
 > = float2(0.5, 0.5);
 uniform int DOF_FOCUSSAMPLES < __UNIFORM_SLIDER_INT1
 	ui_min = 3; ui_max = 10;
-	ui_tooltip = "Amount of samples around the focus point for smoother focal plane detection.";
+	ui_label = "聚焦样品";
+	ui_tooltip = "聚焦点周围的样本量，用于更平滑的焦平面检测。";
 > = 6;
 uniform float DOF_FOCUSRADIUS < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.02; ui_max = 0.20;
-	ui_tooltip = "Radius of samples around the focus point.";
+	ui_label = "聚焦半径";
+	ui_tooltip = "样本围绕焦点的半径。";
 > = 0.05;
 uniform float DOF_NEARBLURCURVE <
 	ui_type = "drag";
 	ui_min = 0.5; ui_max = 1000.0;
-	ui_tooltip = "Curve of blur closer than focal plane. Higher means less blur.";
+	ui_label = "近模糊曲线";
+	ui_tooltip = "模糊曲线比焦平面更接近。越高，模糊越少。";
 > = 1.60;
 uniform float DOF_FARBLURCURVE <
 	ui_type = "drag";
 	ui_min = 0.05; ui_max = 5.0;
-	ui_tooltip = "Curve of blur behind focal plane. Higher means less blur.";
+	ui_label = "远模糊曲线";
+	ui_tooltip = "焦平面后的模糊曲线。越高，模糊越少。";
 > = 2.00;
 uniform float DOF_MANUALFOCUSDEPTH < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Depth of focal plane when autofocus is off. 0.0 means camera, 1.0 means infinite distance.";
+	ui_label = "手动对焦深度";
+	ui_tooltip = "关闭自动对焦时焦平面的深度。0.0表示摄像头，1.0表示无限距离。";
 > = 0.02;
 uniform float DOF_INFINITEFOCUS <
 	ui_type = "drag";
 	ui_min = 0.01; ui_max = 1.0;
-	ui_tooltip = "Distance at which depth is considered as infinite. 1.0 is standard.\nLow values only produce out of focus blur when focus object is very close to the camera. Recommended for gaming.";
+	ui_label = "无限焦点";
+	ui_tooltip = "深度被认为是无限的距离。1.0标准。\n低值仅在对焦对象非常接近相机时产生失焦模糊。推荐游戏。";
 > = 1.00;
 uniform float DOF_BLURRADIUS <
 	ui_type = "drag";
 	ui_min = 2.0; ui_max = 100.0;
-	ui_tooltip = "Maximal blur radius in pixels.";
+	ui_label = "模糊半径";
+	ui_tooltip = "最大模糊半径(像素)。";
 > = 15.0;
 
 // Ring DOF Settings
 uniform int iRingDOFSamples < __UNIFORM_SLIDER_INT1
 	ui_min = 5; ui_max = 30;
-	ui_tooltip = "Samples on the first ring. The other rings around have more samples.";
+	ui_label = "采样";
+	ui_tooltip = "第一个环形的样品。周围的其他环有更多的样本。";
 > = 6;
 uniform int iRingDOFRings < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 8;
-	ui_tooltip = "Ring count";
+	ui_label = "环数";
+	ui_tooltip = "环数";
 > = 4;
 uniform float fRingDOFThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 3.0;
-	ui_tooltip = "Threshold for bokeh brightening. Above this value, everything gets much much brighter.\n1.0 is maximum value for LDR games like GTASA, higher values work only on HDR games like Skyrim etc.";
+	ui_label = "阈值";
+	ui_tooltip = "散景增亮阈值。\n1.0是像GTASA这样的LDR游戏的最大值，更高的值只适用于像《天际》这样的HDR游戏。";
 > = 0.7;
 uniform float fRingDOFGain < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.1; ui_max = 30.0;
-	ui_tooltip = "Amount of brightening for pixels brighter than threshold.";
+	ui_label = "增加";
+	ui_tooltip = "比阈值更亮的像素的亮度。";
 > = 27.0;
 uniform float fRingDOFBias < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Bokeh bias";
+	ui_label = "乖离率";
+	ui_tooltip = "外焦偏差";
 > = 0.0;
 uniform float fRingDOFFringe < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Amount of chromatic aberration";
+	ui_label = "边缘";
+	ui_tooltip = "彩色像差的数量";
 > = 0.5;
 
 // Magic DOF Settings
 uniform int iMagicDOFBlurQuality < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 30;
-	ui_tooltip = "Blur quality as control value over tap count.\nQuality 15 produces 721 taps, impossible with other DOF shaders by far, most they can do is about 150.";
+	ui_label = "模糊质量";
+	ui_tooltip = "模糊质量作为控制值超过点击计数。质量15产生721个点击，到目前为止，其他景深着色器是不可能的，大多数他们可以做大约150个。";
 > = 8;
 uniform float fMagicDOFColorCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 10.0;
-	ui_tooltip = "DOF weighting curve";
+	ui_label = "颜色曲线";
+	ui_tooltip = "景深权重曲线";
 > = 4.0;
 
 // GP65CJ042 DOF Settings
 uniform int iGPDOFQuality < __UNIFORM_SLIDER_INT1
 	ui_min = 0; ui_max = 7;
-	ui_tooltip = "0 = only slight gaussian farblur but no bokeh. 1-7 bokeh blur, higher means better quality of blur but less fps. ";
+	ui_label = "质量";
+	ui_tooltip = "0 =只有轻微的高斯模糊，但没有散景。1-7散景模糊，越高意味着模糊质量越好，但帧数越低。";
 > = 6;
 uniform bool bGPDOFPolygonalBokeh <
-	ui_tooltip = "Enables polygonal bokeh shape, e.g. POLYGON_NUM 5 means pentagonal bokeh shape. Setting this value to false results in circular bokeh shape.";
+	ui_label = "多边形散景";
+	ui_tooltip = "启用多边形散景形状，例如POLYGON_NUM 5表示五边形散景形状。将此值设置为false会得到圆形散景图。";
 > = true;
 uniform int iGPDOFPolygonCount < __UNIFORM_SLIDER_INT1
 	ui_min = 3; ui_max = 9;
-	ui_tooltip = "Controls the amount pf polygons for polygonal bokeh shape. 3 = triangular, 4 = square, 5 = pentagonal etc.";
+	ui_label = "多边形数";
+	ui_tooltip = "控制多边形散边框形状的多边形数量。3 =三角形，4 =正方形，5 =五边形等等。";
 > = 5;
 uniform float fGPDOFBias < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 20.0;
-	ui_tooltip = "Shifts bokeh weighting to bokeh shape edge. Set to 0 for even bright bokeh shapes, raise it for darker bokeh shapes in center and brighter on edge.";
+	ui_label = "偏斜";
+	ui_tooltip = "移散景加权到散景形状边缘。为明亮的焦色形状设置为0，为中心较暗的焦色形状和边缘较亮的焦色形状提高为0。";
 > = 10.0;
 uniform float fGPDOFBiasCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 3.0;
-	ui_tooltip = "Power of Bokeh Bias. Raise for more defined bokeh outlining on bokeh shape edge.";
+	ui_label = "偏斜曲线";
+	ui_tooltip = "散景的强度。在散景形状的边缘升起以得到更多定义的散景轮廓。";
 > = 2.0;
 uniform float fGPDOFBrightnessThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 2.0;
-	ui_tooltip = "Threshold for bokeh brightening. Above this value, everything gets much much brighter.\n1.0 is maximum value for LDR games like GTASA, higher values work only on HDR games like Skyrim etc.";
+	ui_label = "亮度阈值";
+	ui_tooltip = "散景增亮阈值。高于这个值，一切都变得更加明亮。\n1.0是GTASA等LDR游戏的最大值，更高的值只适用于《天际》等HDR游戏。";
 > = 0.5;
 uniform float fGPDOFBrightnessMultiplier < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Amount of brightening for pixels brighter than fGPDOFBrightnessThreshold.";
+	ui_label = "亮度系数";
+	ui_tooltip = "亮度高于亮度阈值的像素的亮度增加量。";
 > = 2.0;
 uniform float fGPDOFChromaAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 0.4;
-	ui_tooltip = "Amount of color shifting applied on blurred areas. ";
+	ui_label = "色差量";
+	ui_tooltip = "在模糊区域上应用的颜色移动量。 ";
 > = 0.15;
 
 // MATSO DOF Settings
 uniform bool bMatsoDOFChromaEnable <
-	ui_tooltip = "Enables chromatic aberration.";
+	ui_label = "启用色差";
+	ui_tooltip = "允许色差。";
 > = true;
 uniform float fMatsoDOFChromaPow < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.2; ui_max = 3.0;
-	ui_tooltip = "Amount of chromatic aberration color shifting.";
+	ui_label = "偏移";
+	ui_tooltip = "色差色移量。";
 > = 1.4;
 uniform float fMatsoDOFBokehCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 20.0;
-	ui_tooltip = "Bokeh curve";
+	ui_label = "焦外成像曲线";
+	ui_tooltip = "焦外成像曲线";
 > = 8.0;
 uniform int iMatsoDOFBokehQuality < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 10;
-	ui_tooltip = "Blur quality as control value over tap count.";
+	ui_label = "焦外成像质量";
+	ui_tooltip = "模糊质量作为控制值超过点击计数。";
 > = 2;
 uniform float fMatsoDOFBokehAngle < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0; ui_max = 360; ui_step = 1;
-	ui_tooltip = "Rotation angle of bokeh shape.";
+	ui_label = "焦外成像角度";
+	ui_tooltip = "焦外成像形状的旋转角度。";
 > = 0;
 
 // MCFLY ADVANCED DOF Settings - SHAPE
@@ -167,103 +198,129 @@ uniform float fMatsoDOFBokehAngle < __UNIFORM_SLIDER_FLOAT1
 
 uniform int iADOF_ShapeQuality < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 255;
-	ui_tooltip = "Quality level of DOF shape. Higher means more offsets taken, cleaner shape but also less performance. Compilation time stays same.";
+	ui_label = "形状质量";
+	ui_tooltip = "自由度形状的质量水平。更高意味着更多的偏移，更清晰的形状，但也更低的性能。编译时间保持不变。";
 > = 17;
 uniform float fADOF_ShapeRotation < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0; ui_max = 360; ui_step = 1;
-	ui_tooltip = "Static rotation of bokeh shape.";
+	ui_label = "形状旋转";
+	ui_tooltip = "静态旋转散景形状。";
 > = 15;
 uniform bool bADOF_RotAnimationEnable <
-	ui_tooltip = "Enables constant shape rotation in time.";
+	ui_label = "启用动画";
+	ui_tooltip = "能够在时间内恒定的形状旋转。";
 > = false;
 uniform float fADOF_RotAnimationSpeed < __UNIFORM_SLIDER_FLOAT1
 	ui_min = -5; ui_max = 5;
-	ui_tooltip = "Speed of shape rotation. Negative numbers change direction.";
+	ui_label = "动画速度";
+	ui_tooltip = "形状旋转的速度。负数改变方向。";
 > = 2.0;
 uniform bool bADOF_ShapeCurvatureEnable <
-	ui_tooltip = "Bends edges of polygonal shape outwards (or inwards). Circular shape best with vertices > 7";
+	ui_label = "启用形状弯曲";
+	ui_tooltip = "将多边形形状的边缘向外(或向内)弯曲。圆形最好用顶点> 7";
 > = false;
 uniform float fADOF_ShapeCurvatureAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Amount of edge bending. 1.0 results in circular shape. Values below 0 produce star-like shapes.";
+	ui_label = "形状弯曲量";
+	ui_tooltip = "折边量。1.0的结果是圆形。小于0的值产生星形形状。";
 > = 0.3;
 uniform bool bADOF_ShapeApertureEnable <
-	ui_tooltip = "Enables deformation of bokeh shape into swirl-like aperture. You will recognize it when you try it out. Best with big bokeh shapes.";
+	ui_label = "启用孔径形状";
+	ui_tooltip = "使散景形状变形成漩涡状光圈。当你尝试它的时候，你会认出它。最好是大的散景形状。";
 > = false;
 uniform float fADOF_ShapeApertureAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = -0.05; ui_max = 0.05;
-	ui_tooltip = "Amount of deformation. Negative values mirror the effect. ";
+	ui_label = "孔径形状数量";
+	ui_tooltip = "变形量。负值反映了这种效果。 ";
 > = 0.01;
 uniform bool bADOF_ShapeAnamorphEnable <
-	ui_tooltip = "Lessens horizontal width of shape to simulate anamorphic bokeh shape seen in movies.";
+	ui_label = "启用变形形状";
+	ui_tooltip = "减少形状的水平宽度，以模拟电影中看到的变形散景形状。";
 > = false;
 uniform float fADOF_ShapeAnamorphRatio < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Horizontal width factor. 1.0 means 100% width, 0.0 means 0% width (bokeh shape will be vertical line).";
+	ui_label = "变形形状比例";
+	ui_tooltip = "水平宽度的因素。1.0表示100%宽度，0.0表示0%宽度(散景形状将是垂直线)。";
 > = 0.2;
 uniform bool bADOF_ShapeDistortEnable <
-	ui_tooltip = "Deforms bokeh shape at screen borders to simulate lens distortion. Bokeh shapes at screen egdes look like an egg.";
+	ui_label = "启用扭曲形状";
+	ui_tooltip = "在屏幕边缘变形焦景形状以模拟镜头变形。屏幕上的散景形状看起来像一个鸡蛋。";
 > = false;
 uniform float fADOF_ShapeDistortAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Amount of deformation.";
+	ui_label = "扭曲形状量";
+	ui_tooltip = "变形量";
 > = 0.2;
 uniform bool bADOF_ShapeDiffusionEnable <
-	ui_tooltip = "Enables some fuzzyness of bokeh shape, makes it less clearly defined.";
+	ui_label = "启用扩散形状";
+	ui_tooltip = "使散景的形状有些模糊，使它不太清楚定义。";
 > = false;
 uniform float fADOF_ShapeDiffusionAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Amount of shape diffusion. High values look like the bokeh shape exploded.";
+	ui_label = "扩散形状量";
+	ui_tooltip = "形状扩散量。高值看起来像散景形状爆炸。";
 > = 0.1;
 uniform bool bADOF_ShapeWeightEnable <
-	ui_tooltip = "Enables bokeh shape weight bias and shifts color to the shape borders.";
+	ui_label = "启用重量形状";
+	ui_tooltip = "允许散景形状权重偏移，并将颜色转移到形状边界。";
 > = false;
 uniform float fADOF_ShapeWeightCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 8.0;
-	ui_tooltip = "Curve of shape weight bias.";
+	ui_label = "重量形状曲线";
+	ui_tooltip = "形状重量偏差曲线。";
 > = 4.0;
 uniform float fADOF_ShapeWeightAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 8.0;
-	ui_tooltip = "Amount of shape weight bias.";
+	ui_label = "重量形状量";
+	ui_tooltip = "形状重量偏差量。";
 > = 1.0;
 uniform float fADOF_BokehCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 20.0;
-	ui_tooltip = "Bokeh factor. Higher values produce more defined bokeh shapes for separated bright spots.";
+	ui_label = "散景曲线";
+	ui_tooltip = "散景的因素。较高的数值会为分离的亮点产生更明确的散景形状。";
 > = 4.0;
 
 // MCFLY ADVANCED DOF Settings - CHROMATIC ABERRATION
 uniform bool bADOF_ShapeChromaEnable <
-	ui_tooltip = "Enables chromatic aberration at bokeh shape borders. This means 3 times more samples = less performance.";
+	ui_label = "启用形状浓度";
+	ui_tooltip = "使散景形状边界的色差。这意味着3倍以上的样本=更低的性能。";
 > = false;
 uniform int iADOF_ShapeChromaMode <
 	ui_type = "combo";
-	ui_items = "Mode 1\0Mode 2\0Mode 3\0Mode 4\0Mode 5\0Mode 6\0";
-	ui_tooltip = "Switches through the possible R G B shifts.";
+	ui_items = "模式 1\0模式 2\0模式 3\0模式 4\0模式 5\0模式 6\0";
+	ui_label = "形状浓度模式";
+	ui_tooltip = "通过可能的rg转换开关。";
 > = 3;
 uniform float fADOF_ShapeChromaAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 0.5;
-	ui_tooltip = "Amount of color shifting.";
+	ui_label = "形状浓度量";
+	ui_tooltip = "颜色移动量。";
 > = 0.125;
 uniform bool bADOF_ImageChromaEnable <
-	ui_tooltip = "Enables image chromatic aberration at screen corners.\nThis one is way more complex than the shape chroma (and any other chroma on the web).";
+	ui_label = "启用图像色度";
+	ui_tooltip = "使图像色差在屏幕角。\n这个比形状色度(和网络上的任何其他色度)要复杂得多。";
 > = false;
 uniform int iADOF_ImageChromaHues < __UNIFORM_SLIDER_INT1
 	ui_min = 2; ui_max = 20;
-	ui_tooltip = "Amount of samples through the light spectrum to get a smooth gradient.";
+	ui_label = "图像色度色调";
+	ui_tooltip = "样品量通过光谱得到平滑的梯度。";
 > = 5;
 uniform float fADOF_ImageChromaCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 2.0;
-	ui_tooltip = "Image chromatic aberration curve. Higher means less chroma at screen center areas.";
+	ui_label = "图像色度曲线";
+	ui_tooltip = "图像色差曲线。更高意味着屏幕中心区域的色度更低。";
 > = 1.0;
 uniform float fADOF_ImageChromaAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.25; ui_max = 10.0;
-	ui_tooltip = "Linearly increases image chromatic aberration amount.";
+	ui_label = "图像色度量";
+	ui_tooltip = "线性增加图像色差量。";
 > = 3.0;
 
 // MCFLY ADVANCED DOF Settings - POSTFX
 uniform float fADOF_SmootheningAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 2.0;
-	ui_tooltip = "Blur multiplicator of box blur after bokeh to smoothen shape. Box blur is better than gaussian.";
+	ui_label = "平滑量";
+	ui_tooltip = "散景后的盒模糊的模糊乘法器来平滑形状。盒模糊比高斯模糊更好。";
 > = 1.0;
 
 #ifndef bADOF_ImageGrainEnable
@@ -273,15 +330,18 @@ uniform float fADOF_SmootheningAmount < __UNIFORM_SLIDER_FLOAT1
 #if bADOF_ImageGrainEnable
 uniform float fADOF_ImageGrainCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 5.0;
-	ui_tooltip = "Curve of Image Grain distribution. Higher values lessen grain at moderately blurred areas.";
+	ui_label = "图像颗粒曲线";
+	ui_tooltip = "图像粒度分布曲线。在中度模糊区域，高数值会减少颗粒。";
 > = 1.0;
 uniform float fADOF_ImageGrainAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.1; ui_max = 2.0;
-	ui_tooltip = "Linearly multiplies the amount of Image Grain applied.";
+	ui_label = "图像颗粒量";
+	ui_tooltip = "线性乘以应用的图像纹理的数量。";
 > = 0.55;
 uniform float fADOF_ImageGrainScale < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 2.0;
-	ui_tooltip = "Grain texture scale. Low values produce more coarse Noise.";
+	ui_label = "图像颗粒规模";
+	ui_tooltip = "颗粒纹理规模. 低值产生更粗的噪声。";
 > = 1.0;
 #endif
 
@@ -957,6 +1017,9 @@ void PS_McFlyDOF3(float4 vpos : SV_Position, float2 texcoord : TEXCOORD, out flo
 /////////////////////////TECHNIQUES/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 technique RingDOF
+< 
+	ui_label = "景深-环形";
+>
 {
 	pass Focus { VertexShader = PostProcessVS; PixelShader = PS_Focus; RenderTarget = texHDR1; }
 	pass RingDOF1 { VertexShader = PostProcessVS; PixelShader = PS_RingDOF1; RenderTarget = texHDR2; }
@@ -964,6 +1027,9 @@ technique RingDOF
 }
 
 technique MagicDOF
+< 
+	ui_label = "景深-魔法";
+>
 {
 	pass Focus { VertexShader = PostProcessVS; PixelShader = PS_Focus; RenderTarget = texHDR1; }
 	pass MagicDOF1 { VertexShader = PostProcessVS; PixelShader = PS_MagicDOF1; RenderTarget = texHDR2; }
@@ -971,6 +1037,9 @@ technique MagicDOF
 }
 
 technique GP65CJ042DOF
+< 
+	ui_label = "景深-变形镜头光晕";
+>
 {
 	pass Focus { VertexShader = PostProcessVS; PixelShader = PS_Focus; RenderTarget = texHDR1; }
 	pass GPDOF1 { VertexShader = PostProcessVS; PixelShader = PS_GPDOF1; RenderTarget = texHDR2; }
@@ -978,6 +1047,9 @@ technique GP65CJ042DOF
 }
 
 technique MatsoDOF
+< 
+	ui_label = "景深-马索";
+>
 {
 	pass Focus { VertexShader = PostProcessVS; PixelShader = PS_Focus; RenderTarget = texHDR1; }
 	pass MatsoDOF1 { VertexShader = PostProcessVS; PixelShader = PS_MatsoDOF1; RenderTarget = texHDR2; }
@@ -987,6 +1059,9 @@ technique MatsoDOF
 }
 
 technique MartyMcFlyDOF
+< 
+	ui_label = "景深-马蒂·麦克弗莱";
+>
 {
 	pass Focus { VertexShader = PostProcessVS; PixelShader = PS_Focus; RenderTarget = texHDR1; }
 	pass McFlyDOF1 { VertexShader = PostProcessVS; PixelShader = PS_McFlyDOF1; RenderTarget = texHDR2; }

@@ -8,17 +8,20 @@
 
 uniform int GaussianBlurRadius < __UNIFORM_SLIDER_INT1
 	ui_min = 0; ui_max = 4;
-	ui_tooltip = "[0|1|2|3|4] Adjusts the blur radius. Higher values increase the radius";
+	ui_label = "半径";
+	ui_tooltip = "[0|1|2|3|4] 调整模糊半径。数值越大半径越大";
 > = 1;
 
 uniform float GaussianBlurOffset < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Additional adjustment for the blur radius. Values less than 1.00 will reduce the radius.";
+	ui_label = "偏移";
+	ui_tooltip = "额外调整模糊半径。小于1.00的值将减少半径。";
 > = 1.00;
 
 uniform float GaussianBlurStrength < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Adjusts the strength of the effect.";
+	ui_label = "强度";
+	ui_tooltip = "调整效果的强度。";
 > = 0.300;
 
 #include "ReShade.fxh"
@@ -195,6 +198,9 @@ if(GaussianBlurRadius == 4)
 }
 
 technique GaussianBlur
+<
+	ui_label = "模糊-高斯模糊";
+>
 {
 	pass Blur1
 	{

@@ -8,51 +8,61 @@
 
 uniform int HighPassSharpRadius < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 3;
-	ui_tooltip = "1 = 3x3 mask, 2 = 5x5 mask, 3 = 7x7 mask.";
+	ui_label = "锐化半径";
+	ui_tooltip = "1 = 3x3 掩膜, 2 = 5x5 掩膜, 3 = 7x7 掩膜.";
 > = 1;
 
 uniform float HighPassSharpOffset < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Additional adjustment for the blur radius. Values less than 1.00 will reduce the radius limiting the sharpening to finer details.";
+	ui_label = "锐化偏移";
+	ui_tooltip = "额外调整模糊半径。值小于1.00将减少半径，将锐化限制为更精细的细节";
 > = 1.00;
 
 uniform int HighPassBlendMode <
 	ui_type = "combo";
-	ui_items = "Soft Light\0Overlay\0Mulitply\0Hard Light\0Vivid Light\0Screen\0Linear Light\0Addition";
-	ui_tooltip = "Blend modes determine how the sharp mask is applied to the original image";
+	ui_items = "柔光\0覆盖\0充分\0强光\0艳光\0屏幕\0线性光\0加法";
+	ui_label = "混合模式";
+	ui_tooltip = "混合模式决定如何将锐化蒙版应用于原始图像";
 > = 1;
 
 uniform int HighPassBlendIfDark < __UNIFORM_SLIDER_INT1
 	ui_min = 0; ui_max = 255;
+	ui_label = "暗混合系数";
 	ui_tooltip = "Any pixels below this value will be excluded from the effect. Set to 50 to target mid-tones.";
 > = 0;
 
 uniform int HighPassBlendIfLight < __UNIFORM_SLIDER_INT1
 	ui_min = 0; ui_max = 255;
-	ui_tooltip = "Any pixels above this value will be excluded from the effect. Set to 205 to target mid-tones.";
+	ui_label = "光混合系数";
+	ui_tooltip = "任何高于此值的像素将从效果中排除。设置为205以目标中间色调。";
 > = 255;
 
 uniform bool HighPassViewBlendIfMask <
-	ui_tooltip = "Displays the BlendIfMask. The effect will not be applied to areas covered in black";
+	ui_label = "显示混合掩码";
+	ui_tooltip = "显示混合掩码。该效果将不适用于黑色覆盖的区域";
 > = false;
 
 uniform float HighPassSharpStrength < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Adjusts the strength of the effect";
+	ui_label = "锐化强度";
+	ui_tooltip = "调整效果的强度";
 > = 0.400;
 
 uniform float HighPassDarkIntensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 5.00;
-	ui_tooltip = "Adjusts the strength of dark halos.";
+	ui_label = "暗强";
+	ui_tooltip = "调整黑光的强度。";
 > = 1.0;
 
 uniform float HighPassLightIntensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 5.00;
-	ui_tooltip = "Adjusts the strength of light halos.";
+	ui_label = "光强";
+	ui_tooltip = "调整光晕强度。";
 > = 1.0;
 
 uniform bool HighPassViewSharpMask <
-	ui_tooltip = "Displays the SharpMask. Useful when adjusting settings";
+	ui_label = "预览锐化遮罩";
+	ui_tooltip = "显示锐化遮罩。在调整设置时很有用";
 > = false;
 
 #include "ReShade.fxh"
@@ -211,6 +221,9 @@ float3 SharpBlurFinal(in float4 pos : SV_Position, in float2 texcoord : TEXCOORD
 }
 
 technique HighPassSharp
+<
+	ui_label = "锐化-高通道锐化";
+>
 {
 	pass Sharp
 	{

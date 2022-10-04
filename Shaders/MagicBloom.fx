@@ -95,20 +95,20 @@ static const float3 luma_value = float3(0.2126, 0.7152, 0.0722);
 #include "ReShadeUI.fxh"
 
 uniform float fBloom_Intensity < __UNIFORM_SLIDER_FLOAT1
-    ui_label = "Bloom Intensity";
-    ui_tooltip = "Amount of bloom applied to the image.";
+    ui_label = "绽放 强度";
+    ui_tooltip = "应用于图像的绽放量。";
     ui_min = 0.0;
     ui_max = 10.0;
     ui_step = 0.001;
 > = 1.0;
 
 uniform float fBloom_Threshold <
-    ui_label = "Bloom Threshold";
+    ui_label = "绽放 阈值";
     ui_tooltip =
-    "Thresholds (limits) dark pixels from being accounted for bloom.\n"
-    "Essentially, it increases the contrast in bloom and blackens darker pixels.\n"
-    "At 1.0 all pixels are used in bloom.\n"
-    "This value is not normalized, it is exponential, therefore changes in lower values are more noticeable than at higher values.";
+    "阈值(限制)暗像素从被解释为绽放。\n"
+    "本质上，它增加了绽放的对比度，并使较深的像素变黑。\n"
+    "在1.0时，所有像素都被用于绽放。\n"
+    "这个值不是归一化的，它是指数的，因此低值的变化比高值的变化更明显。";
     ui_type = "drag";
     ui_min = 1.0;
     ui_max = 10.0;
@@ -117,10 +117,10 @@ uniform float fBloom_Threshold <
 
 #if !MAGICBLOOM_NODIRT
 uniform float fDirt_Intensity < __UNIFORM_SLIDER_FLOAT1
-    ui_label = "Dirt Intensity";
+    ui_label = "污垢 强度";
     ui_tooltip = 
-    "Amount of lens dirt applied to bloom.\n"
-    "Uses a texture called \"MagicBloom_Dirt.png\" from your textures directory(ies).";
+    "大量的镜片污垢应用于绽放。\n"
+    "从你的纹理目录使用名为\"MagicBloom_Dirt.png\"的文件 。";
     ui_min = 0.0;
     ui_max = 1.0;
     ui_step = 0.001;
@@ -129,23 +129,23 @@ uniform float fDirt_Intensity < __UNIFORM_SLIDER_FLOAT1
 
 #if !MAGICBLOOM_NOADAPT
 uniform float fExposure < __UNIFORM_SLIDER_FLOAT1
-    ui_label = "Exposure";
+    ui_label = "曝光";
     ui_tooltip = 
-    "The target exposure that bloom adapts to.\n"
-    "It is recommended to just leave it at 0.5, unless you wish for a brighter (1.0) or darker (0.0) image.";
+    "绽放适应的目标曝光。\n"
+    "建议将它设置为0.5，除非你希望得到更亮(1.0)或更暗(0.0)的图像。";
     ui_min = 0.0;
     ui_max = 1.0;
     ui_step = 0.001;
 > = 0.5;
 
 uniform float fAdapt_Speed <
-    ui_label = "Adaptation Speed";
+    ui_label = "适应速度";
     ui_tooltip = 
-    "How quick bloom adapts to changes in the image brightness.\n"
-    "At 1.0, changes are instantaneous.\n"
-    "It is recommended to use low values, between 0.01 and 0.1.\n"
-    "0.1 will provide a quick but natural adaptation.\n"
-    "0.01 will provide a slow form of adaptation.";
+    "快速绽放适应图像亮度的变化。\n"
+    "在1.0时，变化是瞬时的。\n"
+    "建议使用较低的值，介于0.01和0.1之间。\n"
+    "0.1将提供一个快速而自然的适应。\n"
+    "0.01将提供一种缓慢形式的适应。";
     ui_type = "drag";
     ui_min = 0.001;
     ui_max = 1.0;
@@ -153,37 +153,37 @@ uniform float fAdapt_Speed <
 > = 0.1;
 
 uniform float fAdapt_Sensitivity < __UNIFORM_SLIDER_FLOAT1
-    ui_label = "Adapt Sensitivity";
+    ui_label = "适应灵敏度";
     ui_tooltip = 
-    "How sensitive adaptation is towards brightness.\n"
-    "At higher values bloom can get darkened at the slightest amount of brightness.\n"
-    "At lower values bloom will require a lot of image brightness before it's fully darkened."
-    "1.0 will not modify the amount of brightness that is accounted for adaptation.\n"
-    "0.5 is a good value, but may miss certain bright spots.";
+    "适应性对亮度的敏感性。\n"
+    "在较高的值，速绽可以在最轻微的亮度变暗。\n"
+    "在较低的值速绽将需要大量的图像亮度前，它完全变暗。"
+    "1.0将不会修改亮度的数量，这是考虑到适应。\n"
+    "0.5是一个不错的值，但可能会错过某些亮点。";
     ui_min = 0.0;
     ui_max = 3.0;
     ui_step = 0.001;
 > = 1.0;
 
 uniform float2 f2Adapt_Clip < __UNIFORM_SLIDER_FLOAT2
-    ui_label = "Adaptation Min/Max";
+    ui_label = "适应最小/最大";
     ui_tooltip = 
-    "Determines the minimum and maximum values that adaptation can determine to ajust bloom.\n"
-    "Reducing the maximum would cause bloom to be brighter (as it is less adapted).\n"
-    "Increasing the minimum would cause bloom to be darker (as it is more adapted).\n"
-    "Keep the maximum above or equal to the minium and vice-versa.";
+    "决定了适应能决定调整绽放的最小值和最大值。\n"
+    "减少最大值将导致绽放更明亮(因为它是不适应)。\n"
+    "增加最小值将导致绽放变暗(因为它更适应)。\n"
+    "使最大值大于或等于最小值，反之亦然。";
     ui_min = 0.0;
     ui_max = 1.0;
     ui_step = 0.001;
 > = float2(0.0, 1.0);
 
 uniform int iAdapt_Precision < __UNIFORM_SLIDER_INT1
-    ui_label = "Adaptation Precision";
+    ui_label = "适应精度";
     ui_tooltip = 
-    "Determins how accurately bloom adapts to the center of image.\n"
-    "At 0 the adaptation is calculated from the average of the whole image.\n"
-    "At the highest value (which may vary) adaptation focuses solely on the center pixel(s) of the screen.\n"
-    "Values closer to 0 are recommended.";
+    "确定绽放如何准确地适应图像中心。\n"
+    "在0处，自适应是从整个图像的平均值计算的。\n"
+    "在最高值(可能有所不同)时，适应只关注屏幕的中心像素。\n"
+    "建议使用接近0的值。";
     ui_min = 0;
     ui_max = lowest_mip;
     ui_step = 0.1;
@@ -191,10 +191,10 @@ uniform int iAdapt_Precision < __UNIFORM_SLIDER_INT1
 #endif
 
 uniform uint iDebug <
-    ui_label = "Debug Options";
-    ui_tooltip = "Contains debugging options like displaying the bloom texture.";
+    ui_label = "调试选项";
+    ui_tooltip = "包含调试选项，如显示绽放纹理。";
     ui_type = "combo";
-    ui_items = "None\0Display Bloom Texture\0";
+    ui_items = "无\0显示纹理\0";
 > = 0;
 
 //Textures
@@ -427,7 +427,11 @@ float PS_SaveAdapt(float4 pos : SV_Position, float2 uv : TEXCOORD) : SV_Target {
 }
 #endif
 
-technique MagicBloom {
+technique MagicBloom 
+<
+	ui_label = "魔法绽放";
+>
+{
     pass Blur1 {
         VertexShader = PostProcessVS;
         PixelShader = PS_Blur1;

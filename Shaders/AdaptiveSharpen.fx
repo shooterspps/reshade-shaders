@@ -27,71 +27,83 @@
 
 #include "ReShadeUI.fxh"
 
+
+
 uniform float curve_height < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.01; ui_max = 2.0;
-	ui_label = "Sharpening strength";
-	ui_tooltip = "Main control of sharpening strength";
+	ui_label = "锐化强度";
+	ui_tooltip = "主要控制锐度";
 	ui_step = 0.01;
 > = 1.0;
 
 uniform float curveslope <
 	ui_min = 0.01; ui_max = 2.0;
-	ui_tooltip = "Sharpening curve slope, high edge values";
-	ui_category = "Advanced";
+	ui_label = "锐化曲线";
+	ui_tooltip = "锐化曲线斜率大，边缘值高";
+	ui_category = "高级";
 > = 0.5;
 
 uniform float L_overshoot <
 	ui_min = 0.001; ui_max = 0.1;
-	ui_tooltip = "Max light overshoot before compression";
-	ui_category = "Advanced";
+	ui_label = "光过度";
+	ui_tooltip = "在压缩之前最大光过度";
+	ui_category = "高级";
 > = 0.003;
 
 uniform float L_compr_low <
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Light compression, default (0.167=~6x)";
-	ui_category = "Advanced";
+	ui_label = "低光压缩";
+	ui_tooltip = "光压缩,默认 (0.167=~6x)";
+	ui_category = "高级";
 > = 0.167;
 
 uniform float L_compr_high <
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Light compression, surrounded by edges (0.334=~3x)";
-	ui_category = "Advanced";
+	ui_label = "高光压缩";
+	ui_tooltip = "光压缩, 边缘环绕 (0.334=~3x)";
+	ui_category = "高级";
 > = 0.334;
 
 uniform float D_overshoot <
 	ui_min = 0.001; ui_max = 0.1;
-	ui_tooltip = "Max dark overshoot before compression";
-	ui_category = "Advanced";
+	ui_label = "暗过度";
+	ui_tooltip = "在压缩之前最大暗过度";
+	ui_category = "高级";
 > = 0.009;
 
 uniform float D_compr_low <
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Dark compression, default (0.250=4x)";
-	ui_category = "Advanced";
+	ui_label = "低暗压缩";
+	ui_tooltip = "暗压缩, 默认 (0.250=4x)";
+	ui_category = "高级";
 > = 0.250;
 
 uniform float D_compr_high <
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Dark compression, surrounded by edges (0.500=2x)";
-	ui_category = "Advanced";
+	ui_label = "高暗压缩";
+	ui_tooltip = "暗压缩, 边缘环绕 (0.500=2x)";
+	ui_category = "高级";
 > = 0.500;
 
 uniform float scale_lim <
 	ui_min = 0.01; ui_max = 1.0;
-	ui_tooltip = "Abs max change before compression";
-	ui_category = "Advanced";
+	ui_label = "lim比例";
+	ui_tooltip = "压缩前Abs最大变化";
+	ui_category = "高级";
 > = 0.1;
 
 uniform float scale_cs <
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Compression slope above scale_lim";
-	ui_category = "Advanced";
+	ui_label = "lim压缩率";
+	ui_tooltip = "压缩斜率高于 lim比例";
+	ui_category = "高级";
 > = 0.056;
 
 uniform float pm_p <
 	ui_min = 0.01; ui_max = 1.0;
-	ui_tooltip = "Power mean p-value";
-	ui_category = "Advanced";
+	ui_label = "平均p值";
+	ui_tooltip = "幂平均p值";
+	ui_category = "高级";
 > = 0.7;
 
 //-------------------------------------------------------------------------------------------------
@@ -400,6 +412,10 @@ float3 AdaptiveSharpenP1(float4 vpos : SV_Position, float2 tex : TEXCOORD) : SV_
 }
 
 technique AdaptiveSharpen
+<
+	ui_label = "自适应增强";
+	ui_tooltip = "控制锐化和对比度 - 推荐效果";
+>
 {
 	pass AdaptiveSharpenPass1
 	{

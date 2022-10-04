@@ -96,30 +96,30 @@
 
 uniform float NoiseLevel < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.01; ui_max = 1.00;
-	ui_label = "Noise Level";
-	ui_tooltip = "Approximate level of noise in the image.";
+	ui_label = "噪音水平";
+	ui_tooltip = "图像中近似的噪声水平。";
 > = 0.15;
 
 uniform float LerpCoefficeint < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_label = "Lerp Coefficient";
-	ui_tooltip = "Amount of blending between the original and the processed image.";
+	ui_label = "勒普系数";
+	ui_tooltip = "原始图像和处理后的图像之间的混合量。";
 > = 0.8;
 
 uniform float WeightThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_label = "Weight Threshold";
+	ui_label = "权重阈值";
 > = 0.03;
 
 uniform float CounterThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_label = "Counter Threshold";
+	ui_label = "计数器阈值";
 > = 0.05;
 
 uniform float GaussianSigma < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 100.0;
-	ui_label = "Gaussian Sigma";
-	ui_tooltip = "Controls the additional amount of gaussian blur on the image.";
+	ui_label = "标准差";
+	ui_tooltip = "控制图像上的高斯模糊的额外数量。";
 > = 50.0;
 
 // Preprocessor definitions
@@ -219,6 +219,9 @@ float3 PS_Denoise_NLM(float4 vpos : SV_POSITION, float2 texcoord : TEXCOORD) : S
 }
 
 technique KNearestNeighbors
+< 
+	ui_label = "降噪-最近邻";
+>
 {
 	pass
 	{
@@ -228,6 +231,9 @@ technique KNearestNeighbors
 }
 
 technique NonLocalMeans
+< 
+	ui_label = "降噪-非局部平均";
+>
 {
 	pass
 	{

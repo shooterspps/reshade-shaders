@@ -32,8 +32,8 @@
 #endif
 
 uniform float pSSDOIntensity <
-    ui_label = "SSDO Intensity";
-    ui_tooltip = "The intensity curve applied to the effect. High values may produce banding when used along with RGBA8 FilterPrecision.\nAs increasing the precision to RGBA16F will heavily affect performance, rather combine Intensity and Amount if you want high visibility.";
+    ui_label = "强度";
+    ui_tooltip = "应用于效果的强度曲线。当与RGBA8滤波精度一起使用时，高值可能会产生条带。\n由于增加RGBA16F的精度将严重影响性能，如果你想要高可视性，最好结合强度和数量。";
     ui_type = "slider";
     ui_min = 0.001;
     ui_max = 20.0;
@@ -41,8 +41,8 @@ uniform float pSSDOIntensity <
 > = 1.5;
 
 uniform float pSSDOAmount <
-    ui_label = "SSDO Amount";
-    ui_tooltip = "A multiplier applied to occlusion/lighting factors when they are calculated. High values increase the effect's visibilty but may expose artifacts and noise.";
+    ui_label = "数量";
+    ui_tooltip = "在计算遮挡/光照因子时应用乘数。\n高值会增加效果的可见性，但也会暴露出伪影和噪声。";
     ui_type = "slider";
     ui_min = 0.01;
     ui_max = 10.0;
@@ -50,8 +50,8 @@ uniform float pSSDOAmount <
 > = 1.5;
 
 uniform float pSSDOBounceMultiplier <
-    ui_label = "SSDO Indirect Bounce Color Multiplier";
-    ui_tooltip = "SSDO includes an indirect bounce of light which means that colors of objects may interact with each other. This value controls the effects' visibility.";
+    ui_label = "间接反弹颜色乘数";
+    ui_tooltip = "屏空间定向遮挡包括光的间接反射，这意味着物体的颜色可能相互作用。这个值控制效果的可见性。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 1.0;
@@ -59,8 +59,8 @@ uniform float pSSDOBounceMultiplier <
 > = 0.8;
 
 uniform float pSSDOBounceSaturation <
-    ui_label = "SSDO Indirect Bounce Color Saturation";
-    ui_tooltip = "High values may look strange.";
+    ui_label = "间接反射色饱和度";
+    ui_tooltip = "高值可能看起来很奇怪。";
     ui_type = "slider";
     ui_min = 0.1;
     ui_max = 2.0;
@@ -68,8 +68,8 @@ uniform float pSSDOBounceSaturation <
 > = 1.0;
 
 uniform int pSSDOSampleAmount <
-    ui_label = "SSDO Sample Count";
-    ui_tooltip = "The amount of samples taken to accumulate SSDO. Affects quality, reduces noise and almost linearly affects performance. Current high-end systems should max out at ~32 samples at Full HD to reach desirable framerates.";
+    ui_label = "采样计数";
+    ui_tooltip = "积累屏空间定向遮挡的样本量。\n影响质量，降低噪音和几乎线性影响性能。\n目前的高端系统应该在全高清模式下最大达到32个样本以达到理想的帧率。";
     ui_type = "slider";
     ui_min = 1;
     ui_max = 256;
@@ -77,8 +77,8 @@ uniform int pSSDOSampleAmount <
 > = 10;
 
 uniform float pSSDOSampleRange <
-    ui_label = "SSDO Sample Range";
-    ui_tooltip = "Maximum distance for occluders to occlude geometry. High values reduce cache coherence, lead to cache misses and thus decrease performance so keep this below ~150.\nYou may prevent this performance drop by increasing Source LOD.";
+    ui_label = "采样范围";
+    ui_tooltip = "遮挡器遮挡几何体的最大距离。\n高值会降低缓存一致性，导致缓存丢失，从而降低性能，所以保持在~150以下。\n您可以通过增加源LOD来防止这种性能下降。";
     ui_type = "slider";
     ui_min = 4.0;
     ui_max = 1000.0;
@@ -86,8 +86,8 @@ uniform float pSSDOSampleRange <
 > = 70.0;
 
 uniform int pSSDOSourceLOD <
-    ui_label = "SSDO Source LOD";
-    ui_tooltip = "The Mipmap-level of the source texture used to calculate the occlusion/indirect light. 0 = full resolution, 1 = half-axis resolution, 2 = quarter-axis resolution etc.\nCombined with high SampleRange-values, this may improve performance with a slight loss of quality.";
+    ui_label = "LOD源";
+    ui_tooltip = "用于计算遮挡/间接光的源纹理的mipmap级别。\n0 =全分辨率，1 =半轴分辨率，2 =四分之一轴分辨率等。\n结合高的样本范围值，这可能会提高性能，但质量略有损失。";
     ui_type = "slider";
     ui_min = 0;
     ui_max = 3;
@@ -95,8 +95,8 @@ uniform int pSSDOSourceLOD <
 > = 2;
 
 uniform int pSSDOBounceLOD <
-    ui_label = "SSDO Indirect Bounce LOD";
-    ui_tooltip = "The Mipmap-level of the color texture used to calculate the light bounces. 0 = full resolution, 1 = half-axis resolution, 2 = quarter-axis resolution etc.\nCombined with high SampleRange-values, this may improve performance with a slight loss of quality.";
+    ui_label = "间接反弹LOD";
+    ui_tooltip = "用于计算光反射的颜色纹理的mipmap级别。\n0 =全分辨率，1 =半轴分辨率，2 =四分之一轴分辨率等。\n结合高的样本范围值，这可能会在略微降低质量的情况下提高性能。";
     ui_type = "slider";
     ui_min = 0;
     ui_max = 3;
@@ -104,8 +104,8 @@ uniform int pSSDOBounceLOD <
 > = 3;
 
 uniform float pSSDOFilterRadius <
-    ui_label = "Filter Radius";
-    ui_tooltip = "The blur radius that is used to filter out the noise the technique produces. Don't push this too high, everything between 8 - 24 is recommended (depending from SampleAmount, SampleRange, Intensity and Amount).";
+    ui_label = "过滤半径";
+    ui_tooltip = "用于过滤技术产生的噪声的模糊半径。\n不要把它推得太高，建议在8 - 24小时之间\n(根据采样量，采样范围，强度和数量)。";
     ui_type = "slider";
     ui_min = 2.0;
     ui_max = 100.0;
@@ -113,8 +113,8 @@ uniform float pSSDOFilterRadius <
 > = 8.0;
 
 uniform float pSSDOAngleThreshold <
-    ui_label = "SSDO Angle Threshold";
-    ui_tooltip = "Defines the minimum angle for points to contribute when occlusion is computed. This is similar to the depth-bias parameter in other Ambient Occlusion Shaders.";
+    ui_label = "角度阈值";
+    ui_tooltip = "定义点在计算遮挡时贡献的最小角度。这类似于其他环境遮挡着色器中的深度偏差参数。";
     ui_type = "slider";
     ui_min = 0.01;
     ui_max = 0.5;
@@ -122,8 +122,8 @@ uniform float pSSDOAngleThreshold <
 > = 0.125;
 
 uniform float pSSDOFadeStart <
-    ui_label = "SSDO Draw Distance: Fade Start";
-    ui_tooltip = "The distance from which the effect starts decreasing. Use this slider combined with the Fade-End slider to create a smooth fade-out of the effect.";
+    ui_label = "绘制距离:淡出开始";
+    ui_tooltip = "影响开始减弱的距离。使用此滑块与淡出结束滑块组合创建平滑的淡出效果。";
     ui_type = "slider";
     ui_min = 0.1;
     ui_max = 0.95;
@@ -131,8 +131,8 @@ uniform float pSSDOFadeStart <
 > = 0.9;
 
 uniform float pSSDOFadeEnd <
-    ui_label = "SSDO Draw Distance: Fade End";
-    ui_tooltip = "This value defines the distance from which the effect will be cut off. Use this slider combined with the Fade-Start slider to create a smooth fade-out of the effect.";
+    ui_label = "绘制距离:淡出结束";
+    ui_tooltip = "这个值定义了效果被截断的距离。使用此滑块与渐退开始滑块组合，创建平滑的渐退效果。";
     ui_type = "slider";
     ui_min = 0.15;
     ui_max = 1.0;
@@ -140,9 +140,9 @@ uniform float pSSDOFadeEnd <
 > = 0.95;
 
 uniform int pSSDODebugMode <
-    ui_label = "SSDO Debug View";
+    ui_label = "调试视图";
     ui_type = "combo";
-    ui_items = "Debug-mode off\0Outputs the filtered SSDO component\0Shows you the raw, noisy SSDO right after scattering the occlusion/lighting\0";
+    ui_items = "调试模式关闭\0输出过滤的SSDO组件\0向你展示原始的，嘈杂的SSDO在散射遮挡/光照后\0";
 > = 0;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -447,7 +447,11 @@ float4 PS_SetOriginal(VS_OUTPUT_POST IN) : COLOR
 // +++++   TECHNIQUES   +++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-technique PPFXSSDO < ui_label = "PPFX SSDO"; ui_tooltip = "Screen Space Directional Occlusion | Ambient Occlusion simulates diffuse shadows/self-shadowing of geometry.\nIndirect Lighting brightens objects that are exposed to a certain 'light source' you may specify in the parameters below.\nThis approach takes directional information into account and simulates indirect light bounces, approximating global illumination."; >
+technique PPFXSSDO 
+< 
+	ui_label = "光影-屏空间定向遮挡"; 
+	ui_tooltip = "屏空间定向遮挡 | 环境遮挡模拟几何的漫射阴影/自阴影。\n间接照明照亮暴露在特定“光源”下的物体，你可以在下面的参数中指定。\n这种方法考虑了方向信息，模拟了间接的光反射，近似全局光照。"; 
+>
 {
 	pass setOriginal
 	{

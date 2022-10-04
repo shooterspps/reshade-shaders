@@ -29,30 +29,35 @@
 
 uniform float colourfulness < __UNIFORM_SLIDER_FLOAT1
 	ui_min = -1.0; ui_max = 2.0;
-	ui_tooltip = "Degree of colourfulness, 0 = neutral";
+	ui_label = "色彩程度";
+	ui_tooltip = "色彩程度，0 =中性";
 	ui_step = 0.01;
 > = 0.4;
 
 uniform float lim_luma < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.1; ui_max = 1.0;
-	ui_tooltip = "Lower values allows for more change near clipping";
+	ui_label = "剪切更改";
+	ui_tooltip = "较低的值允许在剪切附近进行更多的更改";
 	ui_step = 0.01;
 > = 0.7;
 
 uniform bool enable_dither <
-	ui_tooltip = "Enables dithering, avoids introducing banding in gradients";
-	ui_category = "Dither";
+	ui_tooltip = "启用抖动，避免引入梯度带";
+	ui_label = "启用抖动";
+	ui_category = "振动";
 > = false;
 
 uniform bool col_noise <
-	ui_tooltip = "Coloured dither noise, lower subjective noise level";
-	ui_category = "Dither";
+	ui_tooltip = "彩色抖动噪声，降低主观噪声水平";
+	ui_label = "抖动噪声";
+	ui_category = "振动";
 > = true;
 
 uniform float backbuffer_bits <
 	ui_min = 1.0; ui_max = 32.0;
-	ui_tooltip = "Backbuffer bith depth, most likely 8 or 10 bits";
-	ui_category = "Dither";
+	ui_tooltip = "反向缓冲位深度，很可能是8或10位";
+	ui_label = "反向缓冲位";
+	ui_category = "振动";
 > = 8.0;
 
 //-------------------------------------------------------------------------------------------------
@@ -131,6 +136,9 @@ float3 Colourfulness(float4 vpos : SV_Position, float2 tex : TEXCOORD) : SV_Targ
 }
 
 technique Colourfulness
+<
+	ui_label = "丰富色彩";
+>
 {
 	pass
 	{

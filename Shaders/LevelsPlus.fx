@@ -73,29 +73,34 @@ static const float PI = 3.141592653589793238462643383279f;
 #include "ReShadeUI.fxh"
 
 uniform bool EnableLevels <
-	ui_tooltip = "Enable or Disable Levels for TV <> PC or custome color range";
+	ui_tooltip = "启用或禁用 电视<>电脑 或自定义颜色范围的级别";
+	ui_label = "启用色阶调整";
 > = true;
 
 uniform float3 InputBlackPoint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "The black point is the new black - literally.\n0 Everything darker than this will become completely black.";
+	ui_tooltip = "黑点是新的黑点——毫不夸张地说。\n0所有比这黑的都将变成完全黑的。";
+	ui_label = "输入黑点";
 > = float3(16/255.0f, 18/255.0f, 20/255.0f);
 
 uniform float3 InputWhitePoint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "The new white point.\n0 Everything brighter than this becomes completely white";
+	ui_tooltip = "新的白点。\n0 所有比这更亮的东西都变成了白色";
+	ui_label = "输入白点";
 > = float3(233/255.0f, 222/255.0f, 211/255.0f);
 
 uniform float3 InputGamma < __UNIFORM_SLIDER_FLOAT3
 	ui_min = 0.01f; ui_max = 10.00f; step = 0.01f;
 	ui_label = "RGB Gamma";
-	ui_tooltip = "Adjust midtones for Red, Green and Blue.";
+	ui_tooltip = "调整红、绿、蓝的中间音。";
 > = float3(1.00f,1.00f,1.00f);
 
 uniform float3 OutputBlackPoint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "The black point is the new black - literally.\n0 Everything darker than this will become completely black.";
+	ui_label = "输出黑点";
+	ui_tooltip = "黑点是新的黑点——毫不夸张地说。\n0 任何比这更黑的东西都会变成完全的黑色。";
 > = float3(0/255.0f, 0/255.0f, 0/255.0f);
 
 uniform float3 OutputWhitePoint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "The new white point.\n0 Everything brighter than this becomes completely white";
+	ui_tooltip = "新的白点。\n0 所有比这更亮的东西都变成了白色";
+	ui_label = "输出白点";
 > = float3(255/255.0f, 255/255.0f, 255/255.0f);
 
 // Anti clipping measures
@@ -104,66 +109,79 @@ uniform float3 OutputWhitePoint < __UNIFORM_COLOR_FLOAT3
 uniform float3 MinBlackPoint <
 	ui_type = "color";
 	ui_min = 0.0f; ui_max = 0.5f;
+	ui_label = "避免剪切";
 	ui_tooltip = "If avoid clipping enabled this is the percentage break point relative to Output black.\n0 Anything lower than this will be compressed to fit into output range.";
 > = float3(16/255.0f, 18/255.0f, 20/255.0f);
 
 uniform float3 MinWhitePoint <
 	ui_type = "color";
 	ui_min = 0.5f; ui_max = 1.0f;
+	ui_label = "避免剪切";
 	ui_tooltip = "If avoid clipping enabled this is the percentage white point relative to Output white.\n0 Anything higher than this will be compressed to fit into output range.";
 > = float3(233/255.0f/1.1f, 222/255.0f/1.1f, 211/255.0f/1.1f);
 */
 
 uniform float3 ColorRangeShift < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "Some games like Watch Dogs 2 has color range 16-235 downshifted to 0-219,\n0 so this option was added to upshift color range before expanding it.\n0 RGB value entered here will be just added to default color value.\n0 Negative values impossible at the moment in game, but can be added,\n0 in shader if downshifting needed.\n0 0 disables shifting.";
+	ui_label = "颜色范围变化";
+	ui_tooltip = "有些游戏，如《看门狗2》，颜色范围从16-235降至0-219，\n0，所以在扩展它之前，这个选项被添加到上移颜色范围。\n这里输入的RGB值将被添加到默认颜色值。\n0负值在游戏中是不可能的，但可以添加，\n如果需要减速，着色器为0。\n0 0禁用移动。";
 > = float3(0/255.0f, 0/255.0f, 0/255.0f);
 
 uniform int ColorRangeShiftSwitch < __UNIFORM_SLIDER_INT1
 	ui_min = -1; ui_max = 1;
-	ui_tooltip = "Workaround for lack of negative color values in Reshade UI:\n0 -1 to downshift,\n0 1 to upshift,\n0 0 to disable";
+	ui_label = "颜色范围移位开关";
+	ui_tooltip = "在重塑界面中缺乏负色值的工作区:\n0 -1降档，\n0 1升档，\n0 0禁用";
 > = 0;
 
 /*
 uniform bool AvoidClipping <
-	ui_tooltip = "Avoid pixels clip.";
+	ui_tooltip = "避免像素剪辑。";
+	ui_label = "避免剪切";
 > = false;
 
 uniform bool AvoidClippingWhite <
-	ui_tooltip = "Avoid white pixels clip.";
+	ui_tooltip = "避免白色像素剪辑。";
+	ui_label = "避免白色像素剪辑";
 > = false;
 
 uniform bool AvoidClippingBlack <
-	ui_tooltip = "Avoid black pixels clip.";
+	ui_tooltip = "避免黑色像素剪辑。";
+	ui_label = "避免黑色像素剪辑";
 > = false;
 
 uniform bool SmoothCurve <
-	ui_tooltip = "Improves contrast";
+	ui_tooltip = "提高对比度";
+	ui_label = "提高对比度";
 > = true;
 */
 
 uniform bool HighlightClipping <
-	ui_tooltip = "Colors between the two points will stretched, which increases contrast, but details above and below the points are lost (this is called clipping).\n0 Highlight the pixels that clip.\n0 Red = Some details are lost in the highlights,\n0 Yellow = All details are lost in the highlights,\n0 Blue = Some details are lost in the shadows,\n0 Cyan = All details are lost in the shadows.";
+	ui_label = "高亮剪辑";
+	ui_tooltip = "两个点之间的颜色将被拉伸，这将增加对比度，\n但点上面和下面的细节将丢失(这称为剪切)。\n0突出显示剪辑的像素。\n0红色=一些细节在高光部分丢失了，\n0黄色=所有细节都消失在高光部分，\n0蓝色=一些细节消失在阴影中，\n0青色=所有细节都消失在阴影中。";
 > = false;
 
 
 //------ ACES -------
 
 uniform bool enableACESFilmRec2020old <
-	ui_tooltip = "Enable or Disable OLD ACES for improved contrast and luminance";
+	ui_tooltip = "启用或禁用旧ACES以提高对比度和亮度";
+	ui_label = "启用旧ACESFilmRec2020";
 > = false;
 
 uniform bool enableACESFilmRec2020 <
-	ui_tooltip = "Enable or Disable ACES for improved contrast and luminance";
+	ui_tooltip = "启用或禁用ACES以提高对比度和亮度";
+	ui_label = "启用新ACESFilmRec2020";
 > = false;
 
 
 uniform bool enableACESFitted <
-	ui_tooltip = "Enable or Disable ALT ACES for improved contrast and luminance";
+	ui_tooltip = "启用或禁用ALT ACES以提高对比度和亮度";
+	ui_label = "启用ACESFitted";
 > = false;
 
 uniform int3 ACESLuminancePercentage < __UNIFORM_SLIDER_INT3
 	ui_min = 0; ui_max = 200; step = 1;
-	ui_tooltip = "Percentage of ACES Luminance.\n0 Can be used to avoid some color clipping.";
+	ui_label = "ACES亮度百分比";
+	ui_tooltip = "ACES亮度百分比。可以用来避免一些颜色的剪辑。";
 > = int3(100,100,100);
 
 //--------------------
@@ -430,6 +448,9 @@ float3 LevelsPlusPass(float4 vpos : SV_Position, float2 texcoord : TexCoord) : S
 }
 
 technique LevelsPlus
+<
+	ui_label = "色阶调整Plus";
+>
 {
 	pass
 	{

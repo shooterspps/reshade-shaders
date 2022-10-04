@@ -13,72 +13,86 @@ uniform float fRBM_BlurWidthPixels <
 	ui_type = "drag";
 	ui_min = 0.0; ui_max = 400.00;
 	ui_step = 1;
-	ui_tooltip = "Controls how far the reflections spread. If you get repeating artifacts, lower this or raise sample count.";
+	ui_label = "模糊像素宽度";
+	ui_tooltip = "控制反射扩散的距离。如果你得到重复的工件，降低它或者提高样本数量。";
 > = 100.0;
 
 uniform int iRBM_SampleCount < __UNIFORM_SLIDER_INT1
 	ui_min = 16; ui_max = 128;
-	ui_tooltip = "Controls how many glossy reflection samples are taken. Raise this if you get repeating artifacts. Performance hit.";
+	ui_label = "采样计数";
+	ui_tooltip = "控制多少光泽反射样品被采取。如果您得到重复的工件，则提出此问题。性能下降。";
 > = 32;
 
 uniform float fRBM_ReliefHeight < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.00;
-	ui_tooltip = "Controls how intensive the relief on surfaces is. 0.0 means mirror-like reflections.";
+	ui_label = "表面起伏高度";
+	ui_tooltip = "控制表面浮雕的强度。0.0表示镜像反射。";
 > = 0.3;
 
 uniform float fRBM_FresnelReflectance < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "The lower this value, the lower the view to surface angle has to be to get significant reflection. 1.0 means every surface has 100% gloss.";
+	ui_label = "菲涅尔反射";
+	ui_tooltip = "这个值越低，视图到表面的角度就越低，以获得显著的反射。1.0意味着每个表面都有100%的光泽。";
 > = 0.3;
 
 uniform float fRBM_FresnelMult < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Not physically accurate at all: multiplier of reflection intensity at lowest view-surface angle.";
+	ui_label = "菲涅尔衍射";
+	ui_tooltip = "物理上一点都不精确:在最低视面角度反射强度的倍增器。";
 > = 0.5;
 
 uniform float  fRBM_LowerThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Anything darker than this does not get reflected at all. Reflection power increases linearly from lower to upper threshold. ";
+	ui_label = "下阈值";
+	ui_tooltip = "任何比这更暗的东西都不会被反射。反射功率从下限到上限呈线性增加。";
 > = 0.1;
 
 uniform float  fRBM_UpperThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Anything brighter than this contributes fully to reflection. Reflection power increases linearly from lower to upper threshold. ";
+	ui_label = "上阈值";
+	ui_tooltip = "任何比这个亮度更亮的东西都有助于反射。反射功率从下限到上限呈线性增加。 ";
 > = 0.2;
 
 uniform float  fRBM_ColorMask_Red < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on red surfaces.Lower this to remove reflections from red surfaces.";
+	ui_label = "红色";
+	ui_tooltip = "在红色表面反射多重。降低这个值以消除红色表面的反射。";
 > = 1.0;
 
 uniform float  fRBM_ColorMask_Orange < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on orange surfaces. Lower this to remove reflections from orange surfaces.";
+	ui_label = "橙色";
+	ui_tooltip = "橙色表面反射多重。降低这个值以去除橙色表面的反射。";
 > = 1.0;
 
 uniform float  fRBM_ColorMask_Yellow < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on yellow surfaces. Lower this to remove reflections from yellow surfaces.";
+	ui_label = "黄色";
+	ui_tooltip = "黄色表面反射多重。降低这个值以去除黄色表面的反射。";
 > = 1.0;
 
 uniform float  fRBM_ColorMask_Green < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on green surfaces. Lower this to remove reflections from green surfaces.";
+	ui_label = "绿色";
+	ui_tooltip = "绿色表面反射多重。降低这个值以去除绿色表面的反射。";
 > = 1.0;
 
 uniform float  fRBM_ColorMask_Cyan < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on cyan surfaces. Lower this to remove reflections from cyan surfaces.";
+	ui_label = "青色";
+	ui_tooltip = "在青色表面反射多重。降低这一点，以消除来自青色表面的反射。";
 > = 1.0;
 
 uniform float  fRBM_ColorMask_Blue < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on blue surfaces. Lower this to remove reflections from blue surfaces.";
+	ui_label = "蓝色";
+	ui_tooltip = "蓝色表面反射多重。降低这个值以去除蓝色表面的反射。";
 > = 1.0;
 
 uniform float  fRBM_ColorMask_Magenta < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.00;
-	ui_tooltip = "Reflection mult on magenta surfaces. Lower this to remove reflections from magenta surfaces.";
+	ui_label = "洋红";
+	ui_tooltip = "洋红色表面上的反射多重。降低这个值以消除洋红色表面的反射。";
 > = 1.0;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -228,6 +242,9 @@ void PS_RBM_Gen(float4 vpos : SV_Position, float2 texcoord : TEXCOORD, out float
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 technique ReflectiveBumpmapping
+<
+	ui_label = "反光绘图";
+>
 {
 	pass P1
 	{

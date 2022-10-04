@@ -41,8 +41,8 @@
 #include "ReShadeUI.fxh"
 
 uniform float Stage_Opacity < __UNIFORM_SLIDER_FLOAT1
-	ui_label = "Opacity";
-	ui_tooltip = "Set the transparency of the image.";
+	ui_label = "不透明度";
+	ui_tooltip = "设置图像的透明度。";
 	ui_min = 0.0;
 	ui_max = 1.0;
 	ui_step = 0.002;
@@ -51,7 +51,7 @@ uniform float Stage_Opacity < __UNIFORM_SLIDER_FLOAT1
 uniform float Stage_depth < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0;
 	ui_max = .987;
-	ui_label = "Depth Slider";
+	ui_label = "深度滑块";
 > = 0.97;
 
 texture Stage_texture <source="Stage.png";> { Width = BUFFER_WIDTH; Height = BUFFER_HEIGHT; Format=TEXFORMAT; };
@@ -72,6 +72,9 @@ void PS_StageDepth(in float4 position : SV_Position, in float2 texcoord : TEXCOO
 }
 
 technique StageDepth
+<
+	ui_label = "舞台深度";
+>
 {
 	pass
 	{

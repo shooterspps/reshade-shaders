@@ -8,58 +8,74 @@
 
 uniform float Strength < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.05; ui_max = 1.5;
-	ui_toolip = "Strength of the color curve altering";
+	ui_label = "强度";
+	ui_toolip = "色彩曲线变化的强度";
 > = 0.85;
 
 uniform float Fade < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 0.6;
-	ui_tooltip = "Decreases contrast to imitate faded image";
+	ui_label = "褪色";
+	ui_tooltip = "降低对比度模仿褪色图像";
 > = 0.4;
 uniform float Contrast < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 2.0;
+	ui_label = "对比";
 > = 1.0;
 uniform float Linearization < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.5; ui_max = 2.0;
+	ui_label = "线性";
 > = 0.5;
 uniform float Bleach < __UNIFORM_SLIDER_FLOAT1
 	ui_min = -0.5; ui_max = 1.0;
-	ui_tooltip = "More bleach means more contrasted and less colorful image";
+	ui_label = "漂白";
+	ui_tooltip = "更多的漂白剂意味着更多的对比度和更少的色彩图像";
 > = 0.0;
 uniform float Saturation < __UNIFORM_SLIDER_FLOAT1
 	ui_min = -1.0; ui_max = 1.0;
+	ui_label = "饱和";
 > = -0.15;
 
 uniform float RedCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "红曲线";
 > = 1.0;
 uniform float GreenCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "绿曲线";
 > = 1.0;
 uniform float BlueCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "蓝曲线";
 > = 1.0;
 uniform float BaseCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "基础曲线";
 > = 1.5;
 
 uniform float BaseGamma < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.7; ui_max = 2.0;
-	ui_tooltip = "Gamma Curve";
+	ui_label = "基础Gamma";
+	ui_tooltip = "Gamma曲线";
 > = 1.0;
 uniform float EffectGamma < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "效果Gamma";
 > = 0.65;
 uniform float EffectGammaR < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "效果Gamma红";
 > = 1.0;
 uniform float EffectGammaG < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "效果Gamma绿";
 > = 1.0;
 uniform float EffectGammaB < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
+	ui_label = "效果Gamma蓝";
 > = 1.0;
 
 uniform float3 LumCoeff <
+	ui_label = "亮度多项式系数";
 > = float3(0.212656, 0.715158, 0.072186);
 
 #include "ReShade.fxh"
@@ -157,6 +173,9 @@ float3 FilmPass(float4 vpos : SV_Position, float2 texcoord : TexCoord) : SV_Targ
 }
 
 technique FilmicPass
+<
+	ui_label = "电影胶片";
+>
 {
 	pass
 	{

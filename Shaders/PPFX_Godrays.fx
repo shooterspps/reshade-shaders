@@ -16,8 +16,8 @@
 
 // ** GODRAYS **
 uniform int pGodraysSampleAmount <
-    ui_label = "Sample Amount";
-    ui_tooltip = "Effectively the ray's resolution. Low values may look coarse but yield a higher framerate.";
+    ui_label = "样本数量";
+    ui_tooltip = "也就是射线的分辨率。低值可能看起来粗糙，但产生更高的帧速率。";
     ui_type = "slider";
     ui_min = 8;
     ui_max = 250;
@@ -25,8 +25,8 @@ uniform int pGodraysSampleAmount <
 > = 64;
 
 uniform float2 pGodraysSource <
-    ui_label = "Light Source";
-    ui_tooltip = "The vanishing point of the godrays in screen-space. 0.500,0.500 is the middle of your screen.";
+    ui_label = "光源";
+    ui_tooltip = "屏幕空间中光线的消失点。0.500,0.500在屏幕的中间。";
     ui_type = "slider";
     ui_min = -0.5;
     ui_max = 1.5;
@@ -34,8 +34,8 @@ uniform float2 pGodraysSource <
 > = float2(0.5, 0.4);
 
 uniform float pGodraysExposure <
-    ui_label = "Exposure";
-    ui_tooltip = "Contribution exposure of each single light patch to the final ray. 0.100 should generally be enough.";
+    ui_label = "曝光";
+    ui_tooltip = "每一个单独的光贴片对最终光线的折射率。0.100通常就足够了。";
     ui_type = "slider";
     ui_min = 0.01;
     ui_max = 1.0;
@@ -43,8 +43,8 @@ uniform float pGodraysExposure <
 > = 0.1;
 
 uniform float pGodraysFreq <
-    ui_label = "Frequency";
-    ui_tooltip = "Higher values result in a higher density of the single rays. '1.000' leads to rays that'll always cover the whole screen. Balance between falloff, samples and this value.";
+    ui_label = "频率";
+    ui_tooltip = "数值越大，单个射线的密度越高。“1.000”会导致光线始终覆盖整个屏幕。平衡下降，样品和这个值。";
     ui_type = "slider";
     ui_min = 1.0;
     ui_max = 10.0;
@@ -52,8 +52,8 @@ uniform float pGodraysFreq <
 > = 1.2;
 
 uniform float pGodraysThreshold <
-    ui_label = "Threshold";
-    ui_tooltip = "Pixels darker than this value won't cast rays.";
+    ui_label = "阈值";
+    ui_tooltip = "比这个值暗的像素不会投射光线。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 1.0;
@@ -61,8 +61,8 @@ uniform float pGodraysThreshold <
 > = 0.65;
 
 uniform float pGodraysFalloff <
-    ui_label = "Falloff";
-    ui_tooltip = "Lets the rays' brightness fade/falloff with their distance from the light source specified in 'Light Source'.";
+    ui_label = "衰减";
+    ui_tooltip = "让光线的亮度随着距离“光源”中指定的光源的距离而减弱。";
     ui_type = "slider";
     ui_min = 1.0;
     ui_max = 2.0;
@@ -213,7 +213,11 @@ float4 PS_ImageFX(VS_OUTPUT_POST IN) : COLOR
 // +++++   TECHNIQUES   +++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-technique PPFX_Godrays < ui_label = "PPFX Godrays"; ui_tooltip = "Godrays | Lets bright areas cast rays on the screen."; >
+technique PPFX_Godrays 
+< 
+	ui_label = "光影-光线"; 
+	ui_tooltip = "光线 | 让明亮的区域投射光线到屏幕上。"; 
+>
 {
 	pass lightFX
 	{

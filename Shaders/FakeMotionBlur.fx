@@ -32,11 +32,13 @@
 
 uniform float mbRecall < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Motion blur intensity";
+	ui_label = "强度";
+	ui_tooltip = "运动模糊强度";
 > = 0.40;
 uniform float mbSoftness < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Blur strength of consequential streaks";
+	ui_label = "条纹强度";
+	ui_tooltip = "模糊结果条纹的强度";
 > = 1.00;
 
 #include "ReShade.fxh"
@@ -87,6 +89,9 @@ void PS_CopyPreviousFrame(float4 vpos : SV_Position, float2 texcoord : TEXCOORD,
 }
 
 technique MotionBlur
+< 
+	ui_label = "运动模糊";
+>
 {
 	pass CopyFrame
 	{

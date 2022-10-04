@@ -16,24 +16,24 @@
 
 // ** HDR **
 uniform bool pEnableHDR <
-   ui_category = "HDR & Tonemap";
-   ui_label = "Enable HDR & Tonemap";
-   ui_tooltip = "As brightness-increasing effects like bloom will push colors above the maximum brightness of standard displays and thus oversaturate colors and lead to ugly white 'patches' in bright areas, the colors have to be 'remapped' into the displays range.\nSeveral techniques exist for that, actually it's a whole scientific field. Configurable of course.";
+   ui_category = "HDR和色调映射";
+   ui_label = "开启HDR和色调映射";
+   ui_tooltip = "由于像光绽放这样的亮度增加效果会使颜色超过标准显示器的最大亮度，\n从而导致颜色过度饱和，并导致明亮区域出现难看的白色“补丁”，这些颜色必须“重新映射”到显示器范围内。\n有几种方法可以解决这个问题，实际上这是一个完整的科学领域。当然可配置。";
 > = 0;
 
 // ** TONEMAP **
 uniform int pTonemapMode <
-    ui_category = "HDR & Tonemap";
-    ui_label = "Tonemap Mode";
-    ui_tooltip = "Choose a tonemapping algorithm fitting your personal taste.";
+    ui_category = "HDR和色调映射";
+    ui_label = "色调映射模式";
+    ui_tooltip = "选择一个适合你个人品味的色调映射算法。";
     ui_type = "combo";
-    ui_items="Linear, recommended for really low bloomIntensity-values\0Square\0Log10-logarithmic + exposure correction)\0";
+    ui_items="线性的，推荐用于非常低的光绽放强度值\0平方\0log10-对数+曝光校正\0";
 > = 0;
 
 uniform float pTonemapCurve <
-    ui_category = "HDR & Tonemap";
-    ui_label = "Tonemap Curve";
-    ui_tooltip = "How 'aggressive' bright colors are compressed. High values may darken the shadows and mid-tones while preserving details in bright regions (almost-bright skies, for instance).";
+    ui_category = "HDR和色调映射";
+    ui_label = "色调映射曲线";
+    ui_tooltip = "鲜艳的颜色是如何压缩的。高值可能会使阴影和中间色调变暗，同时保留明亮区域的细节(例如几乎明亮的天空)。";
     ui_type = "slider";
     ui_min = 1.0;
     ui_max = 100.0;
@@ -41,9 +41,9 @@ uniform float pTonemapCurve <
 > = 3.0;
 
 uniform float pTonemapExposure <
-    ui_category = "HDR & Tonemap";
-    ui_label = "Tonemap Exposure Adjustment";
-    ui_tooltip = "Every pixel is multiplied by this value before being tonemapped. You can use this as a brightness control or to specify a mid-gray value for Tonemap Contrast.";
+    ui_category = "HDR和色调映射";
+    ui_label = "色调映射曝光调整";
+    ui_tooltip = "每个像素在被映射之前都乘以这个值。\n您可以使用它作为亮度控制或为色调映射对比度指定一个中灰度值。";
     ui_type = "slider";
     ui_min = 0.001;
     ui_max = 10.0;
@@ -51,9 +51,9 @@ uniform float pTonemapExposure <
 > = 1.2;
 
 uniform float pTonemapContrast <
-    ui_category = "HDR & Tonemap";
-    ui_label = "Tonemap Contrast Intensity";
-    ui_tooltip = "Pixels darker than 1 are darkened, pixels above are exposed by this option. Combine with higher (2 - 7) tonemapExposure-values to create get a desirable look.";
+    ui_category = "HDR和色调映射";
+    ui_label = "色调映射对比强度";
+    ui_tooltip = "大于1的像素被调暗，高于1的像素被曝光。\n结合更高(2 - 7)色调映射曝光值，以创建一个理想的外观。";
     ui_type = "slider";
     ui_min = 0.1;
     ui_max = 10.0;
@@ -61,9 +61,9 @@ uniform float pTonemapContrast <
 > = 1.020;
 
 uniform float pTonemapSaturateBlacks <
-    ui_category = "HDR & Tonemap";
-    ui_label = "Tonemap Black Saturation";
-    ui_tooltip = "Some tonemapping algorithms may desaturate your shadows - this option corrects this issue. Dont's use too high values, it is purposed to be a subtle correction.";
+    ui_category = "HDR和色调映射";
+    ui_label = "色调映射黑色饱和";
+    ui_tooltip = "一些映射算法可能会降低你的阴影饱和度-这个选项修正了这个问题。\n不要使用太高的值，这是一个微妙的修正。";
     ui_type = "slider";
     ui_min = 0.01;
     ui_max = 1.0;
@@ -80,9 +80,9 @@ uniform float pTonemapSaturateBlacks <
 #endif
 
 uniform float pBloomRadius <
-    ui_category = "Bloom";
-    ui_label = "Bloom Sample Radius";
-    ui_tooltip = "Maximum distance within pixels affect each other - directly affects performance: Combine with pBloomDownsampling to increase your effective radius while keeping a high framerate.";
+    ui_category = "光绽放";
+    ui_label = "光绽放采样半径";
+    ui_tooltip = "像素之间的最大距离相互影响-直接影响性能:结合pBloomDownsampling增加你的有效半径，同时保持高帧率。";
     ui_type = "slider";
     ui_min = 2.0;
     ui_max = 250.0;
@@ -90,9 +90,9 @@ uniform float pBloomRadius <
 > = 64.0;
 
 uniform float pBloomIntensity <
-    ui_category = "Bloom";
-    ui_label = "Bloom Overall-Intensity";
-    ui_tooltip = "The bloom's exposure, I strongly suggest combining this with a tonemap if you choose a high value here.";
+    ui_category = "光绽放";
+    ui_label = "光绽放整体强度";
+    ui_tooltip = "光绽放的曝光度，我强烈建议将它与色调映射结合，如果你在这里选择一个高值。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 10.0;
@@ -100,17 +100,17 @@ uniform float pBloomIntensity <
 > = 0.5;
 
 uniform int pBloomBlendMode <
-    ui_category = "Bloom";
-    ui_label = "Bloom Blend Mode";
-    ui_tooltip = "Controls how the bloom is mixed with the original frame.";
+    ui_category = "光绽放";
+    ui_label = "光绽放混合模式";
+    ui_tooltip = "控制如何将光绽放与原始帧混合。";
     ui_type = "combo";
-    ui_items="Additive (recommended with tonemaps)\0Lighten (great for night scenes)\0Cover (for configuring/debugging)\0";
+    ui_items="添加剂(建议与色调映射一起使用)\0点亮(适合于夜景)\0封面(配置/调试)\0";
 > = 0;
 
 uniform float pBloomThreshold <
-    ui_category = "Bloom";
-    ui_label = "Bloom Threshold";
-    ui_tooltip = "Pixels darker than this value won't cast bloom.";
+    ui_category = "光绽放";
+    ui_label = "光绽放阈值";
+    ui_tooltip = "比这个值暗的像素不会产生光绽放。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 1.0;
@@ -118,9 +118,9 @@ uniform float pBloomThreshold <
 > = 0.4;
 
 uniform float pBloomCurve <
-    ui_category = "Bloom";
-    ui_label = "Bloom Curve";
-    ui_tooltip = "The effect's gamma curve - the higher, the more will bloom be damped in dark areas - and vice versa.";
+    ui_category = "光绽放";
+    ui_label = "光绽放曲线";
+    ui_tooltip = "这种效果的伽玛曲线-越高，在黑暗的区域，光绽放越少-反之亦然。";
     ui_type = "slider";
     ui_min = 0.1;
     ui_max = 4.0;
@@ -128,9 +128,9 @@ uniform float pBloomCurve <
 > = 1.5;
 
 uniform float pBloomSaturation <
-    ui_category = "Bloom";
-    ui_label = "Bloom Saturation";
-    ui_tooltip = "The effect's color saturation. 0 means white, uncolored bloom, 1.500-3.000 yields a vibrant effect while everything above should make your eyes bleed.";
+    ui_category = "光绽放";
+    ui_label = "光绽放色饱和度";
+    ui_tooltip = "效果的颜色饱和度。0表示白色，无颜色的光绽放，1500 - 3000产生一个充满活力的效果，而以上的一切应该让你的眼睛流血。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 10.0;
@@ -139,15 +139,15 @@ uniform float pBloomSaturation <
 
 // ** LENSDIRT **
 uniform bool pEnableLensdirt <
-    ui_category = "Lensdirt";
-    ui_label = "Enable Lensdirt";
-    ui_tooltip = "Simulates a dirty lens. This effect was introduced in Battlefield 3 back in 2011 and since then was used by many further gamestudios.\nIf enabled, the bloom texture will be used for brightness check, thus scaling the intensity with the local luma instead of the current pixels' one.";
+    ui_category = "镜头污垢";
+    ui_label = "启用镜头污垢";
+    ui_tooltip = "模拟一个脏镜头。这一效果在2011年的《战地3》中被引入，此后许多游戏工作室也开始使用这一效果。\n如果启用，光绽放纹理将用于亮度检查，从而缩放强度与局部亮度，而不是当前像素的一个。";
 > = 0;
 
 uniform float pLensdirtIntensity <
-    ui_category = "Lensdirt";
-    ui_label = "Lensdirt Intensity";
-    ui_tooltip = "The dirt texture's maximum intensity.";
+    ui_category = "镜头污垢";
+    ui_label = "镜头污垢强度";
+    ui_tooltip = "污垢纹理的最大强度。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 1.0;
@@ -155,9 +155,9 @@ uniform float pLensdirtIntensity <
 > = 1.0;
 
 uniform float pLensdirtCurve <
-    ui_category = "Lensdirt";
-    ui_label = "Lensdirt Curve";
-    ui_tooltip = "The curve which the dirt texture's intensity scales with - try higher values to limit visibility solely to bright/almost-white scenes.";
+    ui_category = "镜头污垢";
+    ui_label = "镜头污垢曲线";
+    ui_tooltip = "污垢纹理强度的曲线-尝试更高的值来限制只在明亮/近乎白色的场景中可见性。";
     ui_type = "slider";
     ui_min = 0.0;
     ui_max = 10.0;
@@ -466,7 +466,11 @@ float4 PS_ImageFX(VS_OUTPUT_POST IN) : COLOR
 // +++++   TECHNIQUES   +++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-technique PPFXBloom < ui_label = "PPFX Bloom"; ui_tooltip = "Bloom | This effect lets bright pixels bleed their light into their surroundings. It is fast, highly customizable and fits to many games."; >
+technique PPFXBloom 
+< 
+	ui_label = "光影-光绽放"; 
+	ui_tooltip = "光绽放 | 这种效果让明亮的像素将光线照射到周围的环境中。它速度快，高度可定制，适合许多游戏。"; 
+>
 {
 	pass setOriginal
 	{

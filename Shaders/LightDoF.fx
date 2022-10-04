@@ -38,54 +38,54 @@
 #include "ReShadeUI.fxh"
 
 uniform float fLightDoF_Width < __UNIFORM_SLIDER_FLOAT1
-	ui_label = "Bokeh Width [Light DoF]";
+	ui_label = "散景宽度";
 	ui_min = 1.0;
 	ui_max = 25.0;
 > = 5.0;
 
 uniform float fLightDoF_Amount < __UNIFORM_SLIDER_FLOAT1
-	ui_label = "DoF Amount [Light DoF]";
+	ui_label = "景深量";
 	ui_min = 0.0;
 	ui_max = 10.0;
 > = 10.0;
 
 uniform bool bLightDoF_UseCA <
-	ui_label = "Use Chromatic Aberration [Light DoF]";
-	ui_tooltip = "Use color channel shifting.";
+	ui_label = "使用色差";
+	ui_tooltip = "使用颜色通道转换。";
 > = false;
 
 uniform float2 f2LightDoF_CA < __UNIFORM_SLIDER_FLOAT2
-	ui_label = "Chromatic Aberration [Light DoF]";
-	ui_tooltip = "Shifts color channels.\nFirst value controls far CA, second controls near CA.";
+	ui_label = "色差";
+	ui_tooltip = "变化的颜色通道。第一个值控制远色差，第二个控制近色差。";
 	ui_min = 0.0;
 	ui_max = 1.0;
 > = float2(0.0, 1.0);
 
 uniform bool bLightDoF_AutoFocus <
-	ui_label = "Use Auto Focus [Light DoF]";
+	ui_label = "使用自动对焦";
 > = true;
 
 uniform float fLightDoF_AutoFocusSpeed <
-	ui_label = "Auto Focus Speed [Light DoF]";
+	ui_label = "自动对焦速度";
 	ui_type = "drag";
 	ui_min = 0.001;
 	ui_max = 1.0;
 > = 0.1;
 
 uniform bool bLightDoF_UseMouseFocus <
-	ui_label = "Use Mouse for Auto Focus Center [Light DoF]";
-	ui_tooltip = "Use the mouse position as the auto focus center";
+	ui_label = "使用鼠标选择自动对焦中心";
+	ui_tooltip = "使用鼠标位置作为自动对焦中心";
 > = false;
 
 uniform float2 f2Bokeh_AutoFocusCenter < __UNIFORM_SLIDER_FLOAT2
-	ui_label = "Auto Focus Center [Light DoF]";
-	ui_tooltip = "Target for auto focus.\nFirst value is horizontal: Left<->Right\nSecond value is vertical: Up<->Down";
+	ui_label = "自动对焦中心";
+	ui_tooltip = "目标为自动聚焦。\n第一个值是水平的:左<->右\n第二个值是垂直的:上<->下";
 	ui_min = 0.0;
 	ui_max = 1.0;
 > = float2(0.5, 0.5);
 
 uniform float fLightDoF_ManualFocus < __UNIFORM_SLIDER_FLOAT1
-	ui_label = "Manual Focus [Light DoF]";
+	ui_label = "手动对焦";
 	ui_min = 0.0;
 	ui_max = 1.0;
 > = 0.0;
@@ -217,7 +217,11 @@ float SaveFocus(float4 pos : SV_Position, float2 uv : TEXCOORD) : SV_Target {
 //techniques//////////////////////////////////////////////////////////////////////////////////////
 
 //this technique is dedicated for auto focus, so you don't need it if you're not using auto-focus :)
-technique LightDoF_AutoFocus {
+technique LightDoF_AutoFocus 
+<
+	ui_label = "景深-浅景深-自动对焦";
+>
+{
 	pass GetFocus {
 		VertexShader=PostProcessVS;
 		PixelShader=GetFocus;
@@ -231,7 +235,11 @@ technique LightDoF_AutoFocus {
 }
 
 //technique for far blur
-technique LightDoF_Far {
+technique LightDoF_Far 
+<
+	ui_label = "景深-浅景深-远";
+>
+{
 	pass Far {
 		VertexShader=PostProcessVS;
 		PixelShader=Far;
@@ -239,7 +247,11 @@ technique LightDoF_Far {
 }
 
 //technique for near blur
-technique LightDoF_Near {
+technique LightDoF_Near
+<
+	ui_label = "景深-浅景深-近";
+>
+{
 	pass Near {
 		VertexShader=PostProcessVS;
 		PixelShader=Near;

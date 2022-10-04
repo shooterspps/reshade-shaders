@@ -31,67 +31,84 @@
 #include "ReShadeUI.fxh"
 
 uniform bool alDebug <
-	ui_tooltip = "Activates debug mode of AL, upper bar shows detected light, lower bar shows adaptation";
+	ui_label = "环境光调试";
+	ui_tooltip = "激活环境光的调试模式，上栏显示检测到的光，下栏显示适配";
 > = false;
 uniform float alInt < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 20.0;
-	ui_tooltip = "Base intensity of AL";
+	ui_label = "基础强度";
+	ui_tooltip = "环境光的基础强度";
 > = 10.15;
 uniform float alThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 100.0;
-	ui_tooltip = "Reduces intensity for not bright light";
+	ui_label = "阈值";
+	ui_tooltip = "减少不明亮光线的强度";
 > = 15.00;
 uniform bool AL_Dither <
-	ui_tooltip = "Applies dither - may cause diagonal stripes";
+	ui_label = "抖动";
+	ui_tooltip = "应用抖动-可能导致斜条纹";
 > = true;
 
 uniform bool AL_Adaptation <
-	ui_tooltip = "Activates adaptation algorithm";
+	ui_label = "自适应";
+	ui_tooltip = "激活自适应算法";
 > = true;
 uniform float alAdapt < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 4.0;
-	ui_tooltip = "Intensity of AL correction for bright light";
+	ui_label = "校正";
+	ui_tooltip = "强光校正的强度";
 > = 0.70;
 uniform float alAdaptBaseMult < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 4.0;
-	ui_tooltip = "Multiplier for adaption applied to the original image";
+	ui_label = "倍数";
+	ui_tooltip = "用于自适应的倍数应用于原始图像";
 > = 1.00;
 uniform int alAdaptBaseBlackLvL < __UNIFORM_SLIDER_INT1
 	ui_min = 0; ui_max = 4;
-	ui_tooltip = "Distinction level of black and white (lower => less distinct)";
+	ui_label = "黑白等级";
+	ui_tooltip = "黑白区分等级(低=>不明显)";
 > = 2;
 
 uniform bool AL_Dirt <
+	ui_label = "污垢";
 > = true;
 uniform bool AL_DirtTex <
-	ui_tooltip = "Defines if dirt texture is used as overlay";
+	ui_label = "污垢纹理";
+	ui_tooltip = "定义污垢纹理是否用作覆盖";
 > = false;
 uniform bool AL_Vibrance <
-	ui_tooltip = "Vibrance of dirt effect";
+	ui_label = "污垢振动";
+	ui_tooltip = "振动的污垢效果";
 > = false;
 uniform int AL_Adaptive <
 	ui_type = "combo";
 	ui_min = 0; ui_max = 2;
-	ui_items = "Warm\0Cold\0Light Dependent\0";
+	ui_label = "适应";
+	ui_items = "暖\0冷\0光敏\0";
 > = 0;
 uniform float alDirtInt < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Intensity of dirt effect";
+	ui_label = "污垢强度";
+	ui_tooltip = "污垢效果强度";
 > = 1.0;
 uniform float alDirtOVInt < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Intensity of colored dirt effect";
+	ui_label = "彩色污垢强度";
+	ui_tooltip = "彩色污垢效果的强度";
 > = 1.0;
 uniform bool AL_Lens <
-	ui_tooltip = "Lens effect based on AL";
+	ui_label = "透镜";
+	ui_tooltip = "基于环境光的透镜效果";
 > = false;
 uniform float alLensThresh < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 1.0;
-	ui_tooltip = "Reduces intensity of lens effect for not bright light";
+	ui_label = "透镜螺距";
+	ui_tooltip = "在光线不明亮时，降低透镜效应的强度";
 > = 0.5;
 uniform float alLensInt < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 10.0;
-	ui_tooltip = "Intensity of lens effect";
+	ui_label = "透镜强度";
+	ui_tooltip = "透镜效果强度";
 > = 2.0;
 
 #include "ReShade.fxh"
@@ -442,6 +459,9 @@ float4 PS_AL_Magic(float4 vpos : SV_Position, float2 texcoord : TEXCOORD) : SV_T
 }
 
 technique AmbientLight
+<
+	ui_label = "环境光";
+>
 {
 	pass AL_DetectInt
 	{

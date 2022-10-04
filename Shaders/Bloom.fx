@@ -3,144 +3,181 @@
 #include "ReShadeUI.fxh"
 
 uniform int iBloomMixmode <
+	ui_label ="泛光混合模式";
 	ui_type = "combo";
-	ui_items = "Linear add\0Screen add\0Screen/Lighten/Opacity\0Lighten\0";
+	ui_items = "线性增加\0屏幕添加\0屏幕/发亮/不透明\0发亮\0";
 > = 2;
 uniform float fBloomThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.1; ui_max = 1.0;
-	ui_tooltip = "Every pixel brighter than this value triggers bloom.";
+	ui_label ="泛光阈值";
+	ui_tooltip = "每一个比这个值更亮的像素都会触发泛光";
 > = 0.8;
 uniform float fBloomAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 20.0;
-	ui_tooltip = "Intensity of bloom.";
+	ui_label ="泛光数量";
+	ui_tooltip = "泛光强度";
 > = 0.8;
 uniform float fBloomSaturation < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Bloom saturation. 0.0 means white bloom, 2.0 means very, very colorful bloom.";
+	ui_label ="泛光饱和度";
+	ui_tooltip = "泛光饱和度. 0.0 表示白色泛光, 2.0 表示非常鲜艳的泛光";
 > = 0.8;
 uniform float3 fBloomTint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "R, G and B components of bloom tint the bloom color gets shifted to.";
+	ui_tooltip = "R G和B分量的泛光颜色被转移到。";
+	ui_label ="泛光色彩";
 > = float3(0.7, 0.8, 1.0);
 
 uniform bool bLensdirtEnable <
+	ui_label ="镜头眩光启用";
 > = false;
 uniform int iLensdirtMixmode <
 	ui_type = "combo";
-	ui_items = "Linear add\0Screen add\0Screen/Lighten/Opacity\0Lighten\0";
+	ui_label ="眩光混合模式";
+	ui_items = "线性增加\0屏幕添加\0屏幕/发亮/不透明\0发亮\0";
 > = 1;
 uniform float fLensdirtIntensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Intensity of lensdirt.";
+	ui_label ="眩光强度";
+	ui_tooltip = "眩光强度。";
 > = 0.4;
 uniform float fLensdirtSaturation < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.0; ui_max = 2.0;
-	ui_tooltip = "Color saturation of lensdirt.";
+	ui_label ="眩光饱和度";
+	ui_tooltip = "眩光色彩饱和度";
 > = 2.0;
 uniform float3 fLensdirtTint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "R, G and B components of lensdirt tint the lensdirt color gets shifted to.";
+	ui_label ="眩光色彩";
+	ui_tooltip = "R,G和B的组成部分镜片的颜色被转移到。";
 > = float3(1.0, 1.0, 1.0);
 
 uniform bool bAnamFlareEnable <
+	ui_label ="启用闪光";
 > = false;
 uniform float fAnamFlareThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.1; ui_max = 1.0;
-	ui_tooltip = "Every pixel brighter than this value gets a flare.";
+	ui_label ="闪光阈值";
+	ui_tooltip = "每一个比这个值更亮的像素都有一个耀斑。";
 > = 0.9;
 uniform float fAnamFlareWideness < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 2.5;
-	ui_tooltip = "Horizontal wideness of flare. Don't set too high, otherwise the single samples are visible.";
+	ui_label ="闪光宽度";
+	ui_tooltip = "耀斑的水平宽度。不要设置太高，否则单个样品是可见的。";
 > = 2.4;
 uniform float fAnamFlareAmount < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 20.0;
-	ui_tooltip = "Intensity of anamorphic flare.";
+	ui_label ="闪光量";
+	ui_tooltip = "变形耀斑的强度。";
 > = 14.5;
 uniform float fAnamFlareCurve < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 2.0;
-	ui_tooltip = "Intensity curve of flare with distance from source.";
+	ui_label ="闪光曲线";
+	ui_tooltip = "I耀斑强度曲线与光源距离。";
 > = 1.2;
 uniform float3 fAnamFlareColor < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "R, G and B components of anamorphic flare. Flare is always same color.";
+	ui_label ="闪光颜色";
+	ui_tooltip = "变形耀斑的R G B分量。耀斑总是相同的颜色。";
 > = float3(0.012, 0.313, 0.588);
 
 uniform bool bLenzEnable <
+	ui_label ="楞次启用";
 > = false;
 uniform float fLenzIntensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.2; ui_max = 3.0;
-	ui_tooltip = "Power of lens flare effect";
+	ui_label ="楞次强度";
+	ui_tooltip = "镜头光晕效果的强度";
 > = 1.0;
 uniform float fLenzThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.6; ui_max = 1.0;
-	ui_tooltip = "Minimum brightness an object must have to cast lensflare.";
+	ui_label ="楞次阈值";
+	ui_tooltip = "物体必须投出透镜光晕的最小亮度。";
 > = 0.8;
 
 uniform bool bChapFlareEnable <
+	ui_label ="光晕启用";
 > = false;
 uniform float fChapFlareTreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.70; ui_max = 0.99;
-	ui_tooltip = "Brightness threshold for lensflare generation. Everything brighter than this value gets a flare.";
+	ui_label ="光晕阈值";
+	ui_tooltip = "产生透镜光斑的亮度阈值。任何比这个值更亮的东西都会有耀斑。";
 > = 0.90;
 uniform int iChapFlareCount < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 20;
-	ui_tooltip = "Number of single halos to be generated. If set to 0, only the curved halo around is visible.";
+	ui_label ="光晕数量";
+	ui_tooltip = "要生成的单个晕的数目。如果设置为0，只有周围弯曲的光晕是可见的。";
 > = 15;
 uniform float fChapFlareDispersal < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.25; ui_max = 1.00;
-	ui_tooltip = "Distance from screen center (and from themselves) the flares are generated. ";
+	ui_label ="光晕散布";
+	ui_tooltip = "距离屏幕中心(和自己)的耀斑产生。 ";
 > = 0.25;
 uniform float fChapFlareSize < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.20; ui_max = 0.80;
-	ui_tooltip = "Distance (from screen center) the halo and flares are generated.";
+	ui_label ="光晕大小";
+	ui_tooltip = "光晕和耀斑产生的距离(从屏幕中心)。";
 > = 0.45;
 uniform float3 fChapFlareCA < __UNIFORM_SLIDER_FLOAT3
 	ui_min = -0.5; ui_max = 0.5;
-	ui_tooltip = "Offset of RGB components of flares as modifier for Chromatic abberation. Same 3 values means no CA.";
+	ui_label ="光晕颜色";
+	ui_tooltip = "光斑RGB分量的偏移量，作为色差的修正。相同的3值表示没有CA。";
 > = float3(0.00, 0.01, 0.02);
 uniform float fChapFlareIntensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 5.0; ui_max = 200.0;
-	ui_tooltip = "Intensity of flares and halo, remember that higher threshold lowers intensity, you might play with both values to get desired result.";
+	ui_label ="光晕强度";
+	ui_tooltip = "光斑和光晕的强度，记住，更高的阈值会降低强度，你可以使用这两个值来得到想要的结果。";
 > = 100.0;
 
 uniform bool bGodrayEnable <
+	ui_label ="光线启用";
 > = false;
 uniform float fGodrayDecay <
 	ui_type = "drag";
 	ui_min = 0.5000; ui_max = 0.9999;
-	ui_tooltip = "How fast they decay. It's logarithmic, 1.0 means infinite long rays which will cover whole screen";
+	ui_label ="光线衰变";
+	ui_tooltip = "它们衰变得有多快。它是对数的，1.0意味着无限长的射线会覆盖整个屏幕";
 > = 0.9900;
 uniform float fGodrayExposure < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.7; ui_max = 1.5;
-	ui_tooltip = "Upscales the godray's brightness";
+	ui_label ="光线曝光";
+	ui_tooltip = "提升光线的光辉";
 > = 1.0;
 uniform float fGodrayWeight < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.80; ui_max = 1.70;
-	ui_tooltip = "weighting";
+	ui_label ="光线变量";
+	ui_tooltip = "权重";
 > = 1.25;
 uniform float fGodrayDensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.2; ui_max = 2.0;
-	ui_tooltip = "Density of rays, higher means more and brighter rays";
+	ui_label ="光线密度";
+	ui_tooltip = "光线密度越高，就意味着光线越多、越亮";
 > = 1.0;
 uniform float fGodrayThreshold < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.6; ui_max = 1.0;
-	ui_tooltip = "Minimum brightness an object must have to cast godrays";
+	ui_label ="光线阈值";
+	ui_tooltip = "物体最小亮度必须有光线投射";
 > = 0.9;
 uniform int iGodraySamples <
-	ui_tooltip = "2^x format values; How many samples the godrays get";
+	ui_label ="光线采样";
+	ui_tooltip = "2^x 格式值;光线得到多少样本";
 > = 128;
 
 uniform float fFlareLuminance < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.000; ui_max = 1.000;
-	ui_tooltip = "bright pass luminance value ";
+	ui_label ="耀斑亮度";
+	ui_tooltip = "亮通亮度值 ";
 > = 0.095;
 uniform float fFlareBlur < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 1.0; ui_max = 10000.0;
-	ui_tooltip = "manages the size of the flare";
+	ui_label ="耀斑模糊";
+	ui_tooltip = "控制耀斑的大小";
 > = 200.0;
 uniform float fFlareIntensity < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.20; ui_max = 5.00;
-	ui_tooltip = "effect intensity";
+	ui_label ="耀斑强度";
+	ui_tooltip = "效果强度";
 > = 2.07;
 uniform float3 fFlareTint < __UNIFORM_COLOR_FLOAT3
-	ui_tooltip = "effect tint RGB";
+	ui_label ="耀斑色彩";
+	ui_tooltip = "RGB色彩效果";
 > = float3(0.137, 0.216, 1.0);
 
 // If 1, only pixels with depth = 1 get lens flares
@@ -587,6 +624,9 @@ void LightingCombine(float4 vpos : SV_Position, float2 texcoord : TEXCOORD, out 
 }
 
 technique BloomAndLensFlares
+<
+	ui_label = "泛光和镜头眩光";
+>
 {
 	pass BloomPass0
 	{

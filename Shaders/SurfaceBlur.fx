@@ -13,32 +13,37 @@
 uniform int BlurRadius
 < __UNIFORM_SLIDER_INT1
 	ui_min = 1; ui_max = 4;
-	ui_tooltip = "1 = 3x3 mask, 2 = 5x5 mask, 3 = 7x7 mask, 4 = 9x9 mask. For more blurring add SurfaceBlurIterations=2 or SurfaceBlurIterations=3 to Preprocessor Definitions";
+	ui_label = "模糊半径";
+	ui_tooltip = "1 = 3x3 掩饰, 2 = 5x5 掩饰, 3 = 7x7 掩饰, 4 = 9x9 掩饰. 对于更模糊的添加SurfaceBlurIterations=2或SurfaceBlurIterations=3到Preprocessor Definitions";
 > = 1;
 
 uniform float BlurOffset
 < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Additional adjustment for the blur radius. Values less than 1.00 will reduce the blur radius.";
+	ui_label = "模糊补偿";
+	ui_tooltip = "额外调整模糊半径。值小于1.00将减少模糊半径。";
 > = 1.000;
 
 uniform float BlurEdge
 < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.000; ui_max = 10.000;
-	ui_tooltip = "Adjusts the strength of edge detection. Lower values will exclude finer edges from blurring";
+	ui_label = "模糊边缘";
+	ui_tooltip = "调整边缘检测的强度。较低的值将在模糊中排除较细的边缘";
 > = 0.500;
 
 uniform float BlurStrength
 < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Adjusts the strength of the effect";
+	ui_label = "模糊强度";
+	ui_tooltip = "调整效果的强度";
 > = 1.00;
 
 uniform int DebugMode
 <
 	ui_type = "combo";
-	ui_items = "\None\0EdgeChannel\0BlurChannel\0";
-	ui_tooltip = "Helpful for adjusting settings";
+	ui_items = "\无\0边缘通道\0模糊通道\0";
+	ui_label = "调试模式";
+	ui_tooltip = "有助于调整设置";
 > = 0;
 
 #include "ReShade.fxh"
@@ -541,6 +546,9 @@ float3 SurfaceBlur2(in float4 pos : SV_Position, in float2 texcoord : TEXCOORD) 
 #endif
 
 technique SurfaceBlur
+<
+	ui_label = "表面模糊";
+>
 {
 #if SurfaceBlurIterations >= 2
 	pass Blur1

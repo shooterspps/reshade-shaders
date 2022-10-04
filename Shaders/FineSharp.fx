@@ -16,34 +16,38 @@
 
 uniform float sstr < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 8.00;
-	ui_label = "Sharpening Strength";
+	ui_label = "锐化强度";
 > = 2.00;
 
 uniform float cstr <
 	ui_type = "drag";
 	ui_min = 0.00; ui_max = 1.249;
-	ui_label = "Equalization Strength";
-	ui_tooltip = "Suggested settings for cstr based on sstr value: sstr=0->cstr=0, sstr=0.5->cstr=0.1, 1.0->0.6, 2.0->0.9, 2.5->1.00, 3.0->1.09, 3.5->1.15, 4.0->1.19, 8.0->1.249";
+	ui_label = "均衡强度";
+	ui_tooltip = "基于 锐化强度(sstr) 值的 均衡强度(cstr) 建议设置:sstr=0->cstr=0, sstr=0.5->cstr=0.1, 1.0->0.6, 2.0->0.9, 2.5->1.00, 3.0->1.09, 3.5->1.15, 4.0->1.19, 8.0->1.249";
 > = 0.90;
 
 uniform float xstr < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Strength of XSharpen-style final sharpening.";
+	ui_label = "X锐化强度";
+	ui_tooltip = "X锐化风格的最后锐化强度。";
 > = 0.19;
 
 uniform float xrep < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_tooltip = "Repair artefacts from final sharpening. (-Vit- addition to original script)";
+	ui_label = "锐化修正";
+	ui_tooltip = "修复工件从最后的锐化。(- vit -除了原始脚本)";
 > = 0.25;
 
 uniform float lstr <
 	ui_type = "input";
-	ui_tooltip = "Modifier for non-linear sharpening";
+	ui_label = "非线性锐化";
+	ui_tooltip = "修改非线性锐化";
 > = 1.49;
 
 uniform float pstr <
 	ui_type = "input";
-	ui_tooltip = "Exponent for non-linear sharpening";
+	ui_label = "非线性锐化指数";
+	ui_tooltip = "非线性锐化的指数";
 > = 1.272;
 
 // Viscera parameters
@@ -244,6 +248,9 @@ float4 PS_FineSharp_P6(float4 vpos : SV_Position, float2 texcoord : TexCoord) : 
 }
 
 technique Mode1
+<
+	ui_label = "锐化-细腻锐化-模式1";
+>
 {
 	pass ToYUV
 	{
@@ -289,6 +296,9 @@ technique Mode1
 }
 
 technique Mode2
+<
+	ui_label = "锐化-细腻锐化-模式2";
+>
 {
 	pass ToYUV
 	{
@@ -334,6 +344,9 @@ technique Mode2
 }
 
 technique Mode3
+<
+	ui_label = "锐化-细腻锐化-模式3";
+>
 {
 	pass ToYUV
 	{
