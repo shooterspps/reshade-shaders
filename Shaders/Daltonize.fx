@@ -6,7 +6,8 @@
 
 uniform int Type <
 	ui_type = "combo";
-	ui_items = "Protanopia\0Deuteranopia\0Tritanopia\0";
+	ui_label = "类型";
+	ui_items = "红色盲\0绿色盲\0蓝色盲\0";
 > = 0;
 
 #include "ReShade.fxh"
@@ -64,6 +65,9 @@ float3 PS_DaltonizeFXmain(float4 vpos : SV_Position, float2 texcoord : TexCoord)
 }
 
 technique Daltonize
+< 
+	ui_label = "色盲模式";
+>
 {
 	pass
 	{

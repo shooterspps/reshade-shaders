@@ -24,14 +24,14 @@
 
 uniform float fLUT_AmountChroma < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_label = "LUT chroma amount";
-	ui_tooltip = "Intensity of color/chroma change of the LUT.";
+	ui_label = "LUT 量浓度";
+	ui_tooltip = "LUT的颜色强度/色度变化。";
 > = 1.00;
 
 uniform float fLUT_AmountLuma < __UNIFORM_SLIDER_FLOAT1
 	ui_min = 0.00; ui_max = 1.00;
-	ui_label = "LUT luma amount";
-	ui_tooltip = "Intensity of luma change of the LUT.";
+	ui_label = "LUT 亮度数量";
+	ui_tooltip = "LUT的亮度变化。";
 > = 1.00;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -71,6 +71,9 @@ void PS_LUT_Apply(float4 vpos : SV_Position, float2 texcoord : TEXCOORD, out flo
 
 
 technique LUT
+<
+	ui_label = "色彩";
+>
 {
 	pass LUT_Apply
 	{
